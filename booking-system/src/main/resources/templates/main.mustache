@@ -1,0 +1,32 @@
+<html>
+
+<body>
+    <div>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+    <div>
+        <form method="post">
+            <input type="text" name="title" placeholder="Enter ad title" />
+            <input type="text" name="text" placeholder="Ad text">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <div>Ad list</div>
+    <form method="post" action="filter">
+        <input type="text" name="filter">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <button type="submit">Find</button>
+    </form>
+    {{#ads}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{title}}</span>
+        <i>{{text}}</i>
+    </div>
+    {{/ads}}
+</body>
+</html>
