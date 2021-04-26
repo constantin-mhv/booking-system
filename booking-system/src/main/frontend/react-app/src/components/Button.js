@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Button = ({ color, text, onClick, page }) => {
     return (<Link to={page}>
-        <button onClick={onClick} style={{ backgroundColor: color }} className='btn'>{text}</button>
+        <button onClick={onClick} style={{backgroundColor: color, cursor: "pointer"}} className='btn'>{text}</button>
     </Link>
     )
 }

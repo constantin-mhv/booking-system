@@ -1,0 +1,15 @@
+@media all and (min-width: 480px) {
+    .InputBox {
+        padding: 60px 0;
+    }
+  
+    .InputBox form {
+        margin: 0 auto;
+        max-width: 160px;
+    }
+
+    span{
+        align-content: left;
+        color: aqua;
+    }
+  }

@@ -4,13 +4,14 @@ import Button from '../components/Button'
 import MenuScreen from './HomeScreen'
 import ScreenManager from './ScreenManager'
 import '../App.css'
+import InputBox from '../components/InputBox';
 
 const LoginScreen = () => {
   return (
     <div className="App">
     <h1>Log in</h1>
-      <Title />
-        <Button color='yellow' text='Register' page='register'/>
+      <Button color='yellow' text='Register' page='register'/>
+      <InputBox/>
     </div>
   );
 }

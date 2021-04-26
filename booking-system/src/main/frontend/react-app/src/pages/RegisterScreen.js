@@ -5,12 +5,13 @@ import MenuScreen from './HomeScreen'
 import ScreenManager from './ScreenManager'
 import '../App.css'
 import LoginScreen from './LoginScreen';
+import InputBox from '../components/InputBox';
 
 const RegisterScreen = () => {
   return (
     <div className="RegisterScreen">
-      Register
-    <LoginScreen/>
+    <h1>Register</h1>
+      <InputBox buttonText="Register"/>
     </div>
   );
 }
