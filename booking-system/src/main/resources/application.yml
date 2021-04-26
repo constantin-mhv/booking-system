@@ -1,9 +1,0 @@
-## to show default message when an error occurred
-##server.error.include-message=always
-#app:
-#  datasource:
-#    jdbc-url: jdbc:mysql://localhost:3306/booking_system_db
-#    username: user1
-#    password: password1
-#    pool-size: 30
-#
