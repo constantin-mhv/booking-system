@@ -14,16 +14,6 @@ const instance = axios.create({
     }
 });
 
-function SimpleGet () {
-    instance.get("/test")
-        .then((response) => {
-             console.log(response.data);
-        })
-        .catch(error => {
-            ""
-        })
-}
-
 const InputBox = ({ buttonText }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -44,6 +34,14 @@ const InputBox = ({ buttonText }) => {
         }) */
     }
     axios.get("https://api.github.com/users/mapbox")
+        .then((response) => {
+            console.log(response.data);
+            console.log(response.status);
+            console.log(response.statusText);
+            console.log(response.headers);
+            console.log(response.config);
+        });
+    instance.get("/test")
         .then((response) => {
             console.log(response.data);
             console.log(response.status);
