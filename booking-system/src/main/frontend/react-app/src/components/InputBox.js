@@ -23,15 +23,13 @@ const InputBox = ({ buttonText }) => {
     }
 
     function handleSubmit(event) {
-        //setEmail("CONSTANTIN");
-
         event.preventDefault();
 
-        //setPassword(axios.get(`${API_URL}`));
-        /* , {
-            email: email,
+        instance.post(`/login`
+        , {
+            username: email,
             password: password
-        }) */
+        })
     }
     axios.get("https://api.github.com/users/mapbox")
         .then((response) => {
@@ -49,8 +47,17 @@ const InputBox = ({ buttonText }) => {
             console.log(response.headers);
             console.log(response.config);
         });
+        instance.post(`/login`
+        , {
+            username: "u1",
+            password: "p1"
+        })
+        .then((response) => {
+            console.log(response.data);
+        });
 
-    return (
+    return (<div className="auth-wrapper">
+    <div className="auth-inner">
         <div className="InputBox">
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId="email">
@@ -75,6 +82,8 @@ const InputBox = ({ buttonText }) => {
                 </Button>
             </Form>
         </div>
+        </div>
+        </div>
     );
 }
 
@@ -87,3 +96,41 @@ InputBox.propTypes = {
 }
 
 export default InputBox;
+
+/* import './InputBox.css'
+import React, { Component } from "react";
+
+export default class InputBox extends Component {
+    render() {
+        return (<div className="auth-wrapper">
+        <div className="auth-inner">
+            <form>
+                <h3>Sign In</h3>
+
+                <div className="form-group">
+                    <label>Email address</label>
+                    <input type="email" className="form-control" placeholder="Enter email" />
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" className="form-control" placeholder="Enter password" />
+                </div>
+
+                <div className="form-group">
+                    <div className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                    </div>
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <p className="forgot-password text-right">
+                    Forgot <a Link to={'/register'}>password?</a>
+                </p>
+            </form>
+        </div>
+      </div>
+        );
+    }
+} */
