@@ -34,3 +34,8 @@ label {
 .navbar-brand {
   font-variant: small-caps;
 }
+
+.form-title {
+  text-align: center;
+  font-weight: bold;
+}

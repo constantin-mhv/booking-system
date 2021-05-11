@@ -49,7 +49,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} style={{color: "lightgreen"}} className="navbar-brand">
-            Hack & S/ash
+            Hack & S/ash Booking
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -97,7 +97,7 @@ class App extends Component {
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  Log out
                 </a>
               </li>
             </div>
@@ -105,13 +105,13 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  Login
+                  Log in
                 </Link>
               </li>
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up
+                  Sign up
                 </Link>
               </li>
             </div>

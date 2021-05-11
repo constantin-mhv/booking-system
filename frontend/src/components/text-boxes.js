@@ -93,9 +93,9 @@ export default class MyForm extends React.Component {
               this.form = c;
             }}
           >
+            <label className="form-title">Publish a new ad</label>
             {!this.state.successful && (
               <div>
-                <div className="form-title">Publish a new ad</div>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
                   <Input
