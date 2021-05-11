@@ -4,7 +4,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button";
-import AdService from "../services/ad.service";
+import RequestService from "../services/request.service";
+import UserService from "../services/user.service";
 
 
 // const API_URL = 'http://localhost:8080/api/text/';
@@ -55,7 +56,7 @@ export default class MyForm extends React.Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AdService.postNewAd(
+      RequestService.postNewAnnouncement(
         this.state.title,
         this.state.desc
       ).then(
@@ -93,7 +94,7 @@ export default class MyForm extends React.Component {
               this.form = c;
             }}
           >
-            <label className="form-title">Publish a new ad</label>
+            <label className="form-title">Publish a new announcement</label>
             {!this.state.successful && (
               <div>
                 <div className="form-group">
@@ -113,7 +114,7 @@ export default class MyForm extends React.Component {
                     className="form-control"
                     name="desc"
                     onChange={this.myChangeHandler}
-                    validations={[required, minimumCharacters]}
+                    validations={[required/* , minimumCharacters */]}
                   />
                 </div>
 

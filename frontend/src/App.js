@@ -52,11 +52,11 @@ class App extends Component {
             Hack & S/ash Booking
           </Link>
           <div className="navbar-nav mr-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/home"} className="nav-link">
                 Home
               </Link>
-            </li>
+            </li> */}
 
             {showModeratorBoard && (
               <li className="nav-item">
@@ -86,8 +86,8 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a href="/place-ad" className="nav-link" onClick={this.l}>
-                  Place an Ad
+                <a href="/new-announcement" className="nav-link">
+                  New announcement
                 </a>
               </li>
               <li className="nav-item">
@@ -127,7 +127,7 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
-            <Route path="/place-ad" component={MyForm} />
+            <Route path="/new-announcement" component={MyForm} />
           </Switch>
         </div>
       </div>

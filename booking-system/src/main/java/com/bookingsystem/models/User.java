@@ -46,7 +46,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Ad> ads;
+    private Set<Announcement> announcements;
 
     public User() {
     }
@@ -55,7 +55,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.ads = new HashSet<>();
+        this.announcements = new HashSet<>();
     }
 
     public UUID getId() {
