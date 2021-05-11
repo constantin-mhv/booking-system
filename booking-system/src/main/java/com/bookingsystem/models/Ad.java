@@ -47,4 +47,14 @@ public class Ad {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }
