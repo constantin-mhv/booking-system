@@ -5,7 +5,6 @@ import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button";
 import RequestService from "../services/request.service";
-import UserService from "../services/user.service";
 
 
 // const API_URL = 'http://localhost:8080/api/text/';
