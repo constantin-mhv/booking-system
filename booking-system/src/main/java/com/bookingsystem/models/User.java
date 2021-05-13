@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users3",
+@Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
@@ -56,6 +56,18 @@ public class User {
         this.email = email;
         this.password = password;
         this.announcements = new HashSet<>();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", announcements=" + announcements +
+                '}';
     }
 
     public UUID getId() {

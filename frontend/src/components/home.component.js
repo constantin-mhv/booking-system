@@ -39,7 +39,7 @@ export default class Home extends Component {
   }
 
   render() {
-    var items = this.state.announcementsList.map(a => <li>{a}</li>)
+    var items = this.state.announcementsList.map(a => <li>{a.title}</li>)
     return (
       <div className="container">
         <header className="jumbotron">
