@@ -1,4 +1,4 @@
-package com.bookingsystem.security.services;
+package com.bookingsystem.services;
 
 import com.bookingsystem.models.Announcement;
 import com.bookingsystem.models.AnnouncementIdAndTitle;
@@ -18,20 +18,15 @@ public class AnnouncementService {
     @Autowired
     private AnnouncementRepository announcementRepository;
 
-//    public AdService(@Qualifier("mysql") AppUserDao AppUserDao) {
-//        this.AppUserDao = AppUserDao;
-//    }
-
-    Optional<Announcement> findByTitle(String title) {
+    public Optional<Announcement> findByTitle(String title) {
         return announcementRepository.findByTitle(title);
     }
 
-    Optional<Announcement> findById(UUID id) {
+    public Optional<Announcement> findById(UUID id) {
         return announcementRepository.findById(id);
     }
 
-//    public List<AnnouncementIdAndTitleInt> getAnnouncementIdAndTitle() {
-public List<Map<String, Object>> getAnnouncementIdAndTitle() {
-        return  announcementRepository.getAnnouncementIdAndTitle();
+    public List<Map<String, Object>> getAnnouncementIdAndTitle() {
+        return announcementRepository.getAnnouncementIdAndTitle();
     }
 }

@@ -1,34 +1,26 @@
 package com.bookingsystem.controllers;
 
 import com.bookingsystem.models.Announcement;
-import com.bookingsystem.models.AnnouncementIdAndTitle;
-import com.bookingsystem.models.AnnouncementIdAndTitleInt;
 import com.bookingsystem.models.User;
 import com.bookingsystem.payload.response.MessageResponse;
 import com.bookingsystem.repository.AnnouncementRepository;
 import com.bookingsystem.repository.UserRepository;
-import com.bookingsystem.security.services.AnnouncementService;
+import com.bookingsystem.services.AnnouncementService;
+import com.bookingsystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
- * TODO: /api/announcements/list - return list with map("id", "title")
  * TODO: /api/announcements/a/ + id (UUID) - return an announcement map
- * TODO: change anouncement id from int to UUID */
+ *  */
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -43,11 +35,13 @@ public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/new")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> addAppUser(Authentication authentication,  @Valid @NotNull @RequestBody Announcement announcement) {
         System.out.println("place-ad post" + announcement.toString());
-//        System.out.println(user.toString());
         System.out.println(authentication.getName());
         Optional<User> user = userRepository.findByUsername(authentication.getName());
         if (user.isEmpty()) {
@@ -70,8 +64,23 @@ public class AnnouncementController {
     @GetMapping("/list")
 //    @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Map<String, Object>> getAllAnnouncementsList() {
-        List<Map<String, Object>> result = announcementRepository.getAnnouncementIdAndTitle();
+        List<Map<String, Object>> result = announcementService.getAnnouncementIdAndTitle();
         return result;
     }
 
+    @GetMapping(path = "/a/{id}")
+    public Map<String, Object> getAnnouncementById(@PathVariable("id") UUID id) {
+        Optional<Announcement> a = announcementService.findById(id);
+        if (a.isEmpty()) {
+            System.out.println("Not found announcement");
+            return Collections.emptyMap();
+        } else {
+            Announcement announcement = a.get();
+            return Map.of(
+                    "title", announcement.getTitle(),
+                    "description", announcement.getDescription(),
+                    "owner_id", announcement.getOwner().getId(),
+                    "username", announcement.getOwner().getUsername());
+        }
+    }
 }

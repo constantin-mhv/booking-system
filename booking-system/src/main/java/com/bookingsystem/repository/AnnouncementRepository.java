@@ -17,4 +17,7 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, UUID
 
 	@Query(value = "select bin_to_uuid(a.id) id, a.title from announcements a", nativeQuery = true)
 	List<Map<String, Object>> getAnnouncementIdAndTitle();
+
+	@Query(value = "select bin_to_uuid(a.id) id, a.title, a.description from announcements a where bin_to_uuid(a.id) = ?1", nativeQuery = true)
+	List<Map<String, Object>> getTitleDescriptionById(UUID id);
 }
