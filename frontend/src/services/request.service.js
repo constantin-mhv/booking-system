@@ -11,6 +11,13 @@ const authAxios = axios.create(
   }
 );
 
+const basicAxios = axios.create(
+  {
+    baseURL: API_URL,
+    headers: {}
+  }
+);
+
 class RequestService {
 
   getAnnouncementList() {
@@ -18,7 +25,16 @@ class RequestService {
     }
 
   getAnnouncementDetails(id) {
+    console.log("announcements/a/" + id);
     return authAxios.get("announcements/a/" + id);
+    }
+    
+  getUserDetails(id) {
+    return authAxios.get("users/u/" + id);
+    }
+    
+  getAnnouncementListByUser(id) {
+    return authAxios.get("users/u/" + id + "/list");
     }
 
   postNewAnnouncement(title, description) {

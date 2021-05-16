@@ -69,8 +69,9 @@ public class AnnouncementController {
     }
 
     @GetMapping(path = "/a/{id}")
-    public Map<String, Object> getAnnouncementById(@PathVariable("id") UUID id) {
-        Optional<Announcement> a = announcementService.findById(id);
+    public Map<String, Object> getAnnouncementById(@PathVariable("id") String id) {
+        System.out.println(id);
+        Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
         if (a.isEmpty()) {
             System.out.println("Not found announcement");
             return Collections.emptyMap();

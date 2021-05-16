@@ -33,9 +33,7 @@ public class UserController {
             for (Announcement a : announcements) {
                 result.add(Map.of(
                         "title", a.getTitle(),
-                        "description", a.getDescription(),
-                        "owner_id", a.getOwner().getId(),
-                        "username", a.getOwner().getUsername())
+                        "id", a.getId())
                 );
             }
 

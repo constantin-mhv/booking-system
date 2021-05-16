@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RequestService from "../services/request.service";
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 
@@ -18,7 +19,6 @@ export default class Home extends Component {
       response => {
         this.setState({
           announcementsList: response.data
-          //announcementsList: ["Fotbal", "Tenis", "Golf"]
         });
       });
     UserService.getPublicContent().then(
@@ -39,11 +39,13 @@ export default class Home extends Component {
   }
 
   render() {
-    var items = this.state.announcementsList.map(a => <li>{a.title}</li>)
+    
+    var items = this.state.announcementsList.map(a => <li><Link to={"/a/" + a.id} style={{color: "orange"}}>{a.title}</Link></li>)
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3>Announcements</h3>
+          {/* <h3>{this.state.content}</h3> */}
           <h3>{items}</h3>
         </header>
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
@@ -53,13 +54,15 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeRole = this.onChangeRole.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
       successful: false,
-      message: ""
+      message: "",
+      role: "ROLE_CLIENT"
     };
   }
 
@@ -80,6 +83,12 @@ export default class Register extends Component {
       password: e.target.value
     });
   }
+  
+  onChangeRole(e) {
+    this.setState({
+      role: e.target.value
+    });
+  }
 
   handleRegister(e) {
     e.preventDefault();
@@ -95,7 +104,8 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.role
       ).then(
         response => {
           this.setState({
@@ -172,6 +182,18 @@ export default class Register extends Component {
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
                   />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="role">User Role</label>
+                  <Select
+                    className="form-control"
+                    name="role"
+                    value={this.state.role}
+                    onChange={this.onChangeRole}
+                  >
+                  <option value="ROLE_CLIENT">Client</option>
+                  <option value="ROLE_OWNER">Owner</option>
+                  </Select>
                 </div>
 
                 <div className="form-group">

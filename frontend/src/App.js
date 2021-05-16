@@ -9,10 +9,12 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
+import MyProfile from "./components/my-profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-import MyForm from "./components/text-boxes";
+import NewAnn from "./components/new-ann.component";
+import Announcement from "./components/announcement.component";
 
 class App extends Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showModeratorBoard: user.roles.includes("ROLE_OWNER"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
@@ -91,7 +93,7 @@ class App extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
+                <Link to={"/my-profile"} className="nav-link">
                   {currentUser.username}
                 </Link>
               </li>
@@ -123,11 +125,13 @@ class App extends Component {
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/my-profile" component={MyProfile} />
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
-            <Route path="/new-announcement" component={MyForm} />
+            <Route path="/new-announcement" component={NewAnn} />
+            <Route path="/a/:id" component={Announcement} />
+            <Route path="/u/:id" component={Profile} />
           </Switch>
         </div>
       </div>
