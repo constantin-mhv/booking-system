@@ -1,4 +1,4 @@
-package com.bookingsystem.models;
+package com.bookingsystem.models.Announcement;
 
 import java.util.UUID;
 

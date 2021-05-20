@@ -1,6 +1,6 @@
 package com.bookingsystem.controllers;
 
-import com.bookingsystem.models.Announcement;
+import com.bookingsystem.models.Announcement.Announcement;
 import com.bookingsystem.models.User;
 import com.bookingsystem.payload.response.MessageResponse;
 import com.bookingsystem.repository.AnnouncementRepository;
@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.*;
-
-/**
- * TODO: /api/announcements/a/ + id (UUID) - return an announcement map
- *  */
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -40,18 +36,18 @@ public class AnnouncementController {
 
     @PostMapping("/new")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<?> addAppUser(Authentication authentication,  @Valid @NotNull @RequestBody Announcement announcement) {
+    public ResponseEntity<?> addAppUser(Authentication authentication, @Valid @NotNull @RequestBody Announcement announcement) {
         System.out.println("place-ad post" + announcement.toString());
         System.out.println(authentication.getName());
-        Optional<User> user = userRepository.findByUsername(authentication.getName());
+        Optional<User> user = userService.findByUsername(authentication.getName());
         if (user.isEmpty()) {
             return new ResponseEntity<>(
                     "User not found",
                     HttpStatus.NOT_FOUND);
         }
         announcement.setOwner(user.get());
+        announcement.setDateTime();
         announcementRepository.save(announcement);
-        getAllAnnouncementsList();
         return ResponseEntity.ok(new MessageResponse("Announcement registered successfully!"));
     }
 
@@ -81,7 +77,8 @@ public class AnnouncementController {
                     "title", announcement.getTitle(),
                     "description", announcement.getDescription(),
                     "owner_id", announcement.getOwner().getId(),
-                    "username", announcement.getOwner().getUsername());
+                    "username", announcement.getOwner().getUsername(),
+                    "publication_date_time", announcement.getPublicationDateTime().toString());
         }
     }
 }

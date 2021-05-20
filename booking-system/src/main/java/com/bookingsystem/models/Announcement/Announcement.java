@@ -1,8 +1,10 @@
-package com.bookingsystem.models;
+package com.bookingsystem.models.Announcement;
 
+import com.bookingsystem.models.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +24,15 @@ public class Announcement {
 
     private String title;
     private String description;
+    @Enumerated(EnumType.STRING)
+    private EStatus status = EStatus.WAITING_ACCEPTANCE;
+
+    /* UTC time */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date publicationDateTime;
+
+/*    @Temporal(TemporalType.TIMESTAMP)
+    LocalDateTime currentDateTime;*/
 
     public Announcement() {
     }
@@ -69,13 +80,43 @@ public class Announcement {
         this.owner = owner;
     }
 
+    public void setDateTime() {
+        publicationDateTime = new Date();
+//        LocalDateTime d = LocalDateTime.now(DateTimeZone.forID("Europe/Bucharest"));
+//        localDateTime = d.toDate();
+    }
+
+    public void setStatus(EStatus status) {
+        this.status = status;
+    }
+
+    public EStatus getStatus() {
+        return status;
+    }
+
+    public Date getPublicationDateTime() {
+        return publicationDateTime;
+    }
+
     @Override
     public String toString() {
-        return "Ad{" +
-                "id=" + id +
-                ", owner=" + owner +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+
+        if(id != null) {
+            return "Ad{" +
+                    "id=" + id.toString() +
+                    ", owner=" + owner +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    '}';
+        }
+        else {
+            return "Ad{" +
+                    "id=null" +
+                    ", owner=" + owner +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    '}';
+        }
     }
+
 }

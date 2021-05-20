@@ -1,6 +1,6 @@
 package com.bookingsystem.controllers;
 
-import com.bookingsystem.models.Announcement;
+import com.bookingsystem.models.Announcement.Announcement;
 import com.bookingsystem.models.User;
 import com.bookingsystem.services.AnnouncementService;
 import com.bookingsystem.services.UserService;
@@ -22,7 +22,8 @@ public class UserController {
 
     @GetMapping("/u/{id}/list")
     public List<Map<String, Object>> getAllAnnouncementsListByUser(@PathVariable("id") UUID id) {
-        Optional<User> u = userService.findById(id);
+        return announcementService.getTitleDateById(id);
+        /*Optional<User> u = userService.findById(id);
         if (u.isEmpty()) {
             System.out.println("User not found");
             return Collections.emptyList();
@@ -41,13 +42,13 @@ public class UserController {
                 System.out.println(m.get("title"));
             }
             return result;
-        }
+        }*/
     }
 
     @GetMapping("/u/{id}")
     public Map<String, Object> getUserDetailsById(@PathVariable("id") UUID id) {
         Optional<User> u = userService.findById(id);
-        if(u.isEmpty()) {
+        if (u.isEmpty()) {
             System.out.println("User not found");
             return Collections.emptyMap();
         } else {

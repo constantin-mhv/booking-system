@@ -1,10 +1,7 @@
 package com.bookingsystem.services;
 
-import com.bookingsystem.models.Announcement;
-import com.bookingsystem.models.AnnouncementIdAndTitle;
-import com.bookingsystem.models.AnnouncementIdAndTitleInt;
+import com.bookingsystem.models.Announcement.Announcement;
 import com.bookingsystem.repository.AnnouncementRepository;
-import com.fasterxml.jackson.databind.util.ObjectBuffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +25,9 @@ public class AnnouncementService {
 
     public List<Map<String, Object>> getAnnouncementIdAndTitle() {
         return announcementRepository.getAnnouncementIdAndTitle();
+    }
+
+    public List<Map<String, Object>> getTitleDateById(UUID id) {
+        return announcementRepository.getTitleDateById(id.toString());
     }
 }

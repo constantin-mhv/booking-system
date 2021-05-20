@@ -1,5 +1,6 @@
 package com.bookingsystem.models;
 
+import com.bookingsystem.models.Announcement.Announcement;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -64,9 +65,9 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                ", announcements=" + announcements +
+                ", password='" + password.toString() + '\'' +
+//                ", roles=" + roles. +
+//                ", announcements=" + announcements +
                 '}';
     }
 
