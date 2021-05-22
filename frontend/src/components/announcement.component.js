@@ -31,6 +31,7 @@ export default class Announcement extends Component {
         <header className="jumbotron">
           <h3>{a.title}</h3>
           <h4>Owner: <Link to={"/u/" + a.owner_id} style={{color: "#00cf00"}}>{a.username}</Link></h4>
+          <h3>Publication date: {a.publication_date_time}</h3>
           <div className="shown-text">
             {a.description}</div>
         </header>

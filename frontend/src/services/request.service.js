@@ -22,26 +22,37 @@ class RequestService {
 
   getAnnouncementList() {
     return authAxios.get("announcements/list");
-    }
+  }
 
   getAnnouncementDetails(id) {
-    console.log("announcements/a/" + id);
     return authAxios.get("announcements/a/" + id);
-    }
-    
+  }
+
   getUserDetails(id) {
     return authAxios.get("users/u/" + id);
-    }
-    
+  }
+
   getAnnouncementListByUser(id) {
     return authAxios.get("users/u/" + id + "/list");
-    }
+  }
 
   postNewAnnouncement(title, description) {
     return authAxios.post('announcements/new', {
       title,
       description
     });
+  }
+  
+  // Dummy Get
+  getDummy() {
+    //return authAxios.get('/test/debug');
+    return authAxios.get('/test/user');
+  }
+
+  // Dummy Post
+  postDummy(json_text) {
+    //return authAxios.post('/test/debug', json_text);
+    return authAxios.post('/test/user', json_text);
   }
 }
 

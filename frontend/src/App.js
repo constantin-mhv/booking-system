@@ -15,6 +15,7 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import NewAnn from "./components/new-ann.component";
 import Announcement from "./components/announcement.component";
+import DebugComponent from "./components/debug.component";
 
 class App extends Component {
   constructor(props) {
@@ -129,6 +130,7 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            <Route path="/debug" component={DebugComponent} />
             <Route path="/new-announcement" component={NewAnn} />
             <Route path="/a/:id" component={Announcement} />
             <Route path="/u/:id" component={Profile} />
