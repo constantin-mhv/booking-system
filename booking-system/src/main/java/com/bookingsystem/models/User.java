@@ -25,13 +25,16 @@ public class User {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-//    private Long id;
     private UUID id;
 
     @NotBlank
     @Size(max = 50)
     @Email
     private String username;
+
+
+    @Size(max = 50)
+    private String displayName;
 
 //    @NotBlank
 //    @Size(max = 50)
@@ -41,9 +44,6 @@ public class User {
     @NotBlank
     @Size(max = 120)
     private String password;
-
-//    @Enumerated(EnumType.STRING)
-//    private ERoleUser role;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -57,11 +57,12 @@ public class User {
     public User() {
     }
 
-    public User(String username, /*String email,*/ String password) {
+    public User(String username, /*String email,*/ String password, String displayName) {
         this.username = username;
 //        this.email = email;
         this.password = password;
         this.announcements = new HashSet<>();
+        this.displayName = displayName;
     }
 
     @Override
@@ -120,23 +121,11 @@ public class User {
         return announcements;
     }
 
-//    public ERoleUser getRole() {
-//        return role;
-//    }
+    public String getDisplayName() {
+        return displayName;
+    }
 
-//    public void setRole(String role) {
-//
-//        switch (role) {
-//            case "ROLE_CLIENT":
-//                this.role = ERoleUser.ROLE_CLIENT;
-////                this.roles.add(ERole.ROLE_CLIENT);
-//                break;
-//            case "ROLE_OWNER":
-//                this.role = ERoleUser.ROLE_OWNER;
-//            case "ROLE_ADMIN":
-//                this.role = ERoleUser.ROLE_ADMIN2;
-//
-//        }
-////        this.role = role;
-//    }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

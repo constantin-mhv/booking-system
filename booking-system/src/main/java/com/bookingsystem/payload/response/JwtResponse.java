@@ -12,12 +12,13 @@ public class JwtResponse {
 	private String displayName;
 	private List<String> roles;
 
-	public JwtResponse(String accessToken, UUID id, String username, /*String email,*/ List<String> roles) {
+	public JwtResponse(String accessToken, UUID id, String username, /*String email,*/ List<String> roles, String displayName) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 //		this.email = email;
 		this.roles = roles;
+		this.displayName = displayName;
 	}
 
 	public String getDisplayName() {

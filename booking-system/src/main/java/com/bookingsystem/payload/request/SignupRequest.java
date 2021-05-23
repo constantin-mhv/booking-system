@@ -14,6 +14,8 @@ public class SignupRequest {
     private String email;
     
     private Set<String> role;
+
+    private String DisplayName;
     
     @NotBlank
     @Size(min = 6, max = 40)
@@ -60,5 +62,13 @@ public class SignupRequest {
     
     public void setRole(Set<String> role) {
       this.role = role;
+    }
+
+    public String getDisplayName() {
+        return DisplayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        DisplayName = displayName;
     }
 }

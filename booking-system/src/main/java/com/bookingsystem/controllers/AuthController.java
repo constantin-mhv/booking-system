@@ -55,6 +55,8 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        System.out.println(userDetails.getEmail());
+		System.out.println(userDetails.getUsername());
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
@@ -63,17 +65,13 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getEmail(),
-                roles));
+                roles,
+                userDetails.getDisplayName()
+        ));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-//		if (userRepository.existsByUsername(signUpRequest.getEmail())) {
-//			return ResponseEntity
-//					.badRequest()
-//					.body(new MessageResponse("Error: Username email is already taken!"));
-//		}
-
         if (userRepository.existsByUsername(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -83,7 +81,7 @@ public class AuthController {
         // Create new user's account
         User user = new User(signUpRequest.getEmail(),
 //							 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()), signUpRequest.getDisplayName());
 
         Set<Role> roles = new HashSet<>();
         Role role;
