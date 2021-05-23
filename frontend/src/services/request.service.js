@@ -45,14 +45,12 @@ class RequestService {
   
   // Dummy Get
   getDummy() {
-    //return authAxios.get('/test/debug');
-    return authAxios.get('/test/user');
+    return authAxios.get('/test/debug/get');
   }
 
   // Dummy Post
   postDummy(json_text) {
-    //return authAxios.post('/test/debug', json_text);
-    return authAxios.post('/test/user', json_text);
+    return authAxios.post('/test/debug/post', json_text);
   }
 }
 
