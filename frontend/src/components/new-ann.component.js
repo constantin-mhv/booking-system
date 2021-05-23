@@ -36,6 +36,7 @@ export default class NewAnn extends React.Component {
     this.state = {
       title: "",
       desc: "",
+      images: "",
       successful: false,
       message: ""
     };
@@ -57,7 +58,8 @@ export default class NewAnn extends React.Component {
     if (this.checkBtn.context._errors.length === 0) {
       RequestService.postNewAnnouncement(
         this.state.title,
-        this.state.desc
+        this.state.desc,
+        this.state.images.split(/\r\n|\n|\r/)
       ).then(
         response => {
           this.setState({
@@ -106,7 +108,6 @@ export default class NewAnn extends React.Component {
                     validations={[required]}
                   />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="desc">Description</label>
                   <Textarea style={{height: "250px"}}
@@ -116,7 +117,16 @@ export default class NewAnn extends React.Component {
                     validations={[required/* , minimumCharacters */]}
                   />
                 </div>
-
+                <div className="form-group">
+                  <label htmlFor="images">Image Links</label>
+                  <Textarea style={{height: "100px"}}
+                    className="form-control"
+                    name="images"
+                    placeholder="Input image links, one on each line."
+                    onChange={this.myChangeHandler}
+                    validations={[required/* , minimumCharacters */]}
+                  />
+                </div>
                 <div className="form-group">
                   <button
                     className="btn btn-primary btn-block"

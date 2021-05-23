@@ -83,7 +83,7 @@ export default class Register extends Component {
       password: e.target.value
     });
   }
-  
+
   onChangeRole(e) {
     this.setState({
       role: e.target.value
@@ -102,9 +102,9 @@ export default class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
-        // this.state.username,
         this.state.email,
         this.state.password,
+        this.state.username,
         this.state.role
       ).then(
         response => {
@@ -149,18 +149,6 @@ export default class Register extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <Input
                     type="text"
@@ -171,7 +159,6 @@ export default class Register extends Component {
                     validations={[required, email]}
                   />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <Input
@@ -184,6 +171,17 @@ export default class Register extends Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.onChangeUsername}
+                    validations={[required, vusername]}
+                  />
+                </div>
+                <div className="form-group">
                   <label htmlFor="role">User Role</label>
                   <Select
                     className="form-control"
@@ -191,8 +189,8 @@ export default class Register extends Component {
                     value={this.state.role}
                     onChange={this.onChangeRole}
                   >
-                  <option value="ROLE_CLIENT">Client</option>
-                  <option value="ROLE_OWNER">Owner</option>
+                    <option value="ROLE_CLIENT">Client</option>
+                    <option value="ROLE_OWNER">Owner</option>
                   </Select>
                 </div>
 

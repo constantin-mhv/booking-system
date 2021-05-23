@@ -43,3 +43,10 @@ label {
 .shown-text {
   font-size: 25px;
 }
+
+.slideshow-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

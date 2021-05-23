@@ -36,10 +36,11 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  postNewAnnouncement(title, description) {
+  postNewAnnouncement(title, description, images) {
     return authAxios.post('announcements/new', {
       title,
-      description
+      description,
+      images
     });
   }
   

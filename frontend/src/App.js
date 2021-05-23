@@ -95,7 +95,7 @@ class App extends Component {
               </li>
               <li className="nav-item">
                 <Link to={"/my-profile"} className="nav-link">
-                  {currentUser.username}
+                  {currentUser.displayName}
                 </Link>
               </li>
               <li className="nav-item">

@@ -10,7 +10,8 @@ export default class Home extends Component {
 
     this.state = {
       content: "",
-      announcementsList: []
+      announcementsList: [],
+      image: ""
     };
   }
 
@@ -39,14 +40,13 @@ export default class Home extends Component {
   }
 
   render() {
-    
-    var items = this.state.announcementsList.map(a => <li><Link to={"/a/" + a.id} style={{color: "orange"}}>{a.title}</Link></li>)
+    var announcements = this.state.announcementsList.map(a => <li><Link to={"/a/" + a.id} style={{color: "orange"}}>{a.title}</Link></li>)
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>Announcements</h3>
           {/* <h3>{this.state.content}</h3> */}
-          <h3>{items}</h3>
+          <h3>{announcements}</h3>
         </header>
       </div>
     );
