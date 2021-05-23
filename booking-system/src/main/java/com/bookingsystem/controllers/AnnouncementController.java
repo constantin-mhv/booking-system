@@ -35,7 +35,8 @@ public class AnnouncementController {
     UserService userService;
 
     @PostMapping("/new")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('USER1111') or hasRole('MODERATOR1111') or hasRole('ADMIN1111')")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<?> addAppUser(Authentication authentication, @Valid @NotNull @RequestBody Announcement announcement) {
         System.out.println("place-ad post" + announcement.toString());
         System.out.println(authentication.getName());
@@ -52,11 +53,12 @@ public class AnnouncementController {
     }
 
     @GetMapping("/new")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('OWNER')")
     public String userAccess() {
         return "User Content.";
     }
 
+    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     @GetMapping("/list")
 //    @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Map<String, Object>> getAllAnnouncementsList() {
@@ -64,6 +66,7 @@ public class AnnouncementController {
         return result;
     }
 
+    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     @GetMapping(path = "/a/{id}")
     public Map<String, Object> getAnnouncementById(@PathVariable("id") String id) {
         System.out.println(id);

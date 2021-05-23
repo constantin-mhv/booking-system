@@ -5,6 +5,7 @@ import com.bookingsystem.models.User;
 import com.bookingsystem.services.AnnouncementService;
 import com.bookingsystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -20,6 +21,7 @@ public class UserController {
     @Autowired
     AnnouncementService announcementService;
 
+    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     @GetMapping("/u/{id}/list")
     public List<Map<String, Object>> getAllAnnouncementsListByUser(@PathVariable("id") UUID id) {
         return announcementService.getTitleDateById(id);
@@ -46,6 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/u/{id}")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     public Map<String, Object> getUserDetailsById(@PathVariable("id") UUID id) {
         Optional<User> u = userService.findById(id);
         if (u.isEmpty()) {

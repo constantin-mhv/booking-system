@@ -14,10 +14,10 @@ import java.util.Date;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	@Value("${bezkoder.app.jwtSecret}")
+	@Value("$jwtSecretKey}")
 	private String jwtSecret;
 
-	@Value("${bezkoder.app.jwtExpirationMs}")
+	@Value("${jwtExpMs}")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {
@@ -25,7 +25,7 @@ public class JwtUtils {
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 		return Jwts.builder()
-				.setSubject((userPrincipal.getUsername())) /*getId().toString()*/
+				.setSubject((userPrincipal.getUsername()))
 				.setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)

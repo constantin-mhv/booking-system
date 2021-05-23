@@ -4,8 +4,8 @@ import javax.validation.constraints.*;
 import java.util.Set;
 
 public class SignupRequest {
-    @NotBlank
-    @Size(min = 3, max = 20)
+//    @NotBlank
+//    @Size(min = 3, max = 20)
     private String username;
  
     @NotBlank
@@ -18,7 +18,18 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
-  
+
+    @NotBlank
+    private String userRole;
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public String getUsername() {
         return username;
     }

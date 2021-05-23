@@ -3,7 +3,12 @@ package com.bookingsystem.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+//@Table(name = "roles")
+@Table(name = "roles",
+		uniqueConstraints = {
+				@UniqueConstraint(columnNames = "name")
+//                @UniqueConstraint(columnNames = "email")
+		})
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

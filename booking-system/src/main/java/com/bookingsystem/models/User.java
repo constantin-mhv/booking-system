@@ -1,6 +1,7 @@
 package com.bookingsystem.models;
 
 import com.bookingsystem.models.Announcement.Announcement;
+import com.bookingsystem.models.Announcement.EStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,31 +15,35 @@ import java.util.UUID;
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username")
+//                @UniqueConstraint(columnNames = "email")
         })
 public class User {
     //	@Id
-	//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
 //    private Long id;
-	private UUID id;
-
-    @NotBlank
-    @Size(max = 20)
-    private String username;
+    private UUID id;
 
     @NotBlank
     @Size(max = 50)
     @Email
-    private String email;
+    private String username;
+
+//    @NotBlank
+//    @Size(max = 50)
+//    @Email
+//    private String email;
 
     @NotBlank
     @Size(max = 120)
     private String password;
+
+//    @Enumerated(EnumType.STRING)
+//    private ERoleUser role;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -52,9 +57,9 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, /*String email,*/ String password) {
         this.username = username;
-        this.email = email;
+//        this.email = email;
         this.password = password;
         this.announcements = new HashSet<>();
     }
@@ -64,7 +69,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
+                /*", email='" + email + '\'' +*/
                 ", password='" + password.toString() + '\'' +
 //                ", roles=" + roles. +
 //                ", announcements=" + announcements +
@@ -87,13 +92,13 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
 
     public String getPassword() {
         return password;
@@ -114,4 +119,24 @@ public class User {
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
+
+//    public ERoleUser getRole() {
+//        return role;
+//    }
+
+//    public void setRole(String role) {
+//
+//        switch (role) {
+//            case "ROLE_CLIENT":
+//                this.role = ERoleUser.ROLE_CLIENT;
+////                this.roles.add(ERole.ROLE_CLIENT);
+//                break;
+//            case "ROLE_OWNER":
+//                this.role = ERoleUser.ROLE_OWNER;
+//            case "ROLE_ADMIN":
+//                this.role = ERoleUser.ROLE_ADMIN2;
+//
+//        }
+////        this.role = role;
+//    }
 }
