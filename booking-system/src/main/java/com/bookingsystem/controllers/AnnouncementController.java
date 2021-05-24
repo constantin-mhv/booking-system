@@ -1,6 +1,8 @@
 package com.bookingsystem.controllers;
 
 import com.bookingsystem.models.Announcement.Announcement;
+import com.bookingsystem.models.Announcement.NewAnnouncement;
+import com.bookingsystem.models.Announcement.Image;
 import com.bookingsystem.models.User;
 import com.bookingsystem.payload.response.MessageResponse;
 import com.bookingsystem.repository.AnnouncementRepository;
@@ -35,20 +37,28 @@ public class AnnouncementController {
     UserService userService;
 
     @PostMapping("/new")
-//    @PreAuthorize("hasRole('USER1111') or hasRole('MODERATOR1111') or hasRole('ADMIN1111')")
     @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?> addAppUser(Authentication authentication, @Valid @NotNull @RequestBody Announcement announcement) {
-        System.out.println("place-ad post" + announcement.toString());
-        System.out.println(authentication.getName());
+    public ResponseEntity<?> addAppUser(Authentication authentication,
+                                        @Valid @NotNull @RequestBody NewAnnouncement newAnnouncement) {
         Optional<User> user = userService.findByUsername(authentication.getName());
         if (user.isEmpty()) {
             return new ResponseEntity<>(
                     "User not found",
                     HttpStatus.NOT_FOUND);
         }
+        Announcement announcement = new Announcement(
+                newAnnouncement.getTitle(),
+                newAnnouncement.getDescription(),
+                newAnnouncement.getImages()
+        );
+
+        for (Image img : newAnnouncement.getImages()) {
+            img.setAnnouncement(announcement);
+        }
         announcement.setOwner(user.get());
         announcement.setDateTime();
         announcementRepository.save(announcement);
+
         return ResponseEntity.ok(new MessageResponse("Announcement registered successfully!"));
     }
 
@@ -60,7 +70,6 @@ public class AnnouncementController {
 
     @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     @GetMapping("/list")
-//    @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Map<String, Object>> getAllAnnouncementsList() {
         List<Map<String, Object>> result = announcementService.getAnnouncementIdAndTitle();
         return result;
@@ -81,7 +90,8 @@ public class AnnouncementController {
                     "description", announcement.getDescription(),
                     "owner_id", announcement.getOwner().getId(),
                     "username", announcement.getOwner().getUsername(),
-                    "publication_date_time", announcement.getPublicationDateTime().toString());
+                    "publication_date_time", announcement.getPublicationDateTime().toString(),
+                    "images", announcement.getListUrlImages());
         }
     }
 }

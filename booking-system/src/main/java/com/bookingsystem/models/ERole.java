@@ -7,4 +7,5 @@ public enum ERole {
     ROLE_OWNER,
     ROLE_ADMIN
 
+
 }

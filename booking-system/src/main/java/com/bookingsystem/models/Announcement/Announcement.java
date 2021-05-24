@@ -4,8 +4,8 @@ import com.bookingsystem.models.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import javax.validation.constraints.Size;
+import java.util.*;
 
 @Entity
 @Table(name = "announcements")
@@ -22,7 +22,12 @@ public class Announcement {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Image> images;
+
+    @Size(max = 120)
     private String title;
+    @Size(max = 4000)
     private String description;
     @Enumerated(EnumType.STRING)
     private EStatus status = EStatus.WAITING_ACCEPTANCE;
@@ -40,6 +45,13 @@ public class Announcement {
     public Announcement(String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    public Announcement(String title, String description, List<Image>images) {
+        this.title = title;
+        this.description = description;
+        this.images = images;
+//        this.id = UUID.randomUUID();
     }
 
 /*    public Announcement(String title, String description, User owner) {
@@ -98,6 +110,15 @@ public class Announcement {
         return publicationDateTime;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+
     @Override
     public String toString() {
 
@@ -118,5 +139,15 @@ public class Announcement {
                     '}';
         }
     }
+
+    public List<String> getListUrlImages() {
+        List<String> result = new ArrayList<>();
+        for(Image img : images) {
+            result.add(img.getUrl());
+        }
+        return result;
+    }
+
+
 
 }
