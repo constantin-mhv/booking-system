@@ -23,8 +23,6 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
-      showAdminBoard: false,
       currentUser: undefined,
     };
   }
@@ -35,8 +33,6 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_OWNER"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
   }
@@ -54,45 +50,15 @@ class App extends Component {
           <Link to={"/"} style={{color: "lightgreen"}} className="navbar-brand">
             Hack & S/ash Booking
           </Link>
-          <div className="navbar-nav mr-auto">
-            {/* <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li> */}
-
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )}
-
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
-            )}
-
-            {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
-                </Link>
-              </li>
-            )}
-          </div>
-
           {currentUser ? (
             <div className="navbar-nav ml-auto">
+              {currentUser.roles.toString() == "ROLE_OWNER" ?
               <li className="nav-item">
                 <a href="/new-announcement" className="nav-link">
                   New announcement
                 </a>
               </li>
+              : null}
               <li className="nav-item">
                 <Link to={"/my-profile"} className="nav-link">
                   {currentUser.displayName}

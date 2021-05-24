@@ -27,6 +27,10 @@ class RequestService {
   getAnnouncementDetails(id) {
     return authAxios.get("announcements/a/" + id);
   }
+  
+  deleteAnnouncement(id) {
+    return authAxios.delete("announcements/a/" + id);
+  }
 
   getUserDetails(id) {
     return authAxios.get("users/u/" + id);
@@ -36,11 +40,13 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  postNewAnnouncement(title, description, images) {
+  postNewAnnouncement(title, description, images, country, region) {
     return authAxios.post('announcements/new', {
       title,
       description,
-      images
+      images,
+      country,
+      region
     });
   }
   
