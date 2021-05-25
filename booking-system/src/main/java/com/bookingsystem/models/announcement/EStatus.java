@@ -1,4 +1,4 @@
-package com.bookingsystem.models.Announcement;
+package com.bookingsystem.models.announcement;
 
 public enum EStatus {
     WAITING_ACCEPTANCE,

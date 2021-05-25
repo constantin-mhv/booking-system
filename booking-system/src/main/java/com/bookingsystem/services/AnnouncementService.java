@@ -1,6 +1,6 @@
 package com.bookingsystem.services;
 
-import com.bookingsystem.models.Announcement.Announcement;
+import com.bookingsystem.models.announcement.Announcement;
 import com.bookingsystem.repository.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

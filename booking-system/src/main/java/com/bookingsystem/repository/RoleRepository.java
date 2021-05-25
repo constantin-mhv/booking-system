@@ -1,7 +1,7 @@
 package com.bookingsystem.repository;
 
-import com.bookingsystem.models.ERole;
-import com.bookingsystem.models.Role;
+import com.bookingsystem.models.user.ERole;
+import com.bookingsystem.models.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

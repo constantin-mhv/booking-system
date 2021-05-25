@@ -1,12 +1,12 @@
 package com.bookingsystem.controllers;
 
-import com.bookingsystem.models.ERole;
-import com.bookingsystem.models.Role;
-import com.bookingsystem.models.User;
-import com.bookingsystem.payload.request.LoginRequest;
-import com.bookingsystem.payload.request.SignupRequest;
-import com.bookingsystem.payload.response.JwtResponse;
-import com.bookingsystem.payload.response.MessageResponse;
+import com.bookingsystem.models.user.ERole;
+import com.bookingsystem.models.user.Role;
+import com.bookingsystem.models.user.User;
+import com.bookingsystem.security.request.LoginRequest;
+import com.bookingsystem.security.request.SignupRequest;
+import com.bookingsystem.security.response.JwtResponse;
+import com.bookingsystem.security.response.MessageResponse;
 import com.bookingsystem.repository.RoleRepository;
 import com.bookingsystem.repository.UserRepository;
 import com.bookingsystem.security.jwt.JwtUtils;

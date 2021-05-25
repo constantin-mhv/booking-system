@@ -1,7 +1,6 @@
-package com.bookingsystem.models;
+package com.bookingsystem.models.user;
 
-import com.bookingsystem.models.Announcement.Announcement;
-import com.bookingsystem.models.Announcement.EStatus;
+import com.bookingsystem.models.announcement.Announcement;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

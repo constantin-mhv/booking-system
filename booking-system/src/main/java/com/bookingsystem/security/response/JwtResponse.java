@@ -1,4 +1,4 @@
-package com.bookingsystem.payload.response;
+package com.bookingsystem.security.response;
 
 import java.util.List;
 import java.util.UUID;

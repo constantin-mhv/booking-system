@@ -1,4 +1,4 @@
-package com.bookingsystem.payload.request;
+package com.bookingsystem.security.request;
 
 import javax.validation.constraints.NotBlank;
 

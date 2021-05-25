@@ -1,4 +1,4 @@
-package com.bookingsystem.payload.response;
+package com.bookingsystem.security.response;
 
 public class MessageResponse {
 	private String message;

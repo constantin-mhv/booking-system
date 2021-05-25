@@ -1,4 +1,4 @@
-package com.bookingsystem.models.Announcement;
+package com.bookingsystem.models.announcement;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

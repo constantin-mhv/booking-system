@@ -1,6 +1,6 @@
 package com.bookingsystem.security.services;
 
-import com.bookingsystem.models.User;
+import com.bookingsystem.models.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

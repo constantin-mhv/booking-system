@@ -1,10 +1,10 @@
 package com.bookingsystem.controllers;
 
-import com.bookingsystem.models.Announcement.Announcement;
-import com.bookingsystem.models.Announcement.NewAnnouncement;
-import com.bookingsystem.models.Announcement.Image;
-import com.bookingsystem.models.User;
-import com.bookingsystem.payload.response.MessageResponse;
+import com.bookingsystem.models.announcement.Announcement;
+import com.bookingsystem.models.announcement.NewAnnouncement;
+import com.bookingsystem.models.announcement.Image;
+import com.bookingsystem.models.user.User;
+import com.bookingsystem.security.response.MessageResponse;
 import com.bookingsystem.repository.AnnouncementRepository;
 import com.bookingsystem.repository.UserRepository;
 import com.bookingsystem.services.AnnouncementService;
@@ -22,60 +22,21 @@ import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
 @RequestMapping("/api/announcements")
 public class AnnouncementController {
     @Autowired
     private AnnouncementRepository announcementRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     private AnnouncementService announcementService;
 
-    @Autowired
-    UserService userService;
-
-    @PostMapping("/new")
-    @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<?> addAppUser(Authentication authentication,
-                                        @Valid @NotNull @RequestBody NewAnnouncement newAnnouncement) {
-        Optional<User> user = userService.findByUsername(authentication.getName());
-        if (user.isEmpty()) {
-            return new ResponseEntity<>(
-                    "User not found",
-                    HttpStatus.NOT_FOUND);
-        }
-        Announcement announcement = new Announcement(
-                newAnnouncement.getTitle(),
-                newAnnouncement.getDescription(),
-                newAnnouncement.getImages()
-        );
-
-        for (Image img : newAnnouncement.getImages()) {
-            img.setAnnouncement(announcement);
-        }
-        announcement.setOwner(user.get());
-        announcement.setDateTime();
-        announcementRepository.save(announcement);
-
-        return ResponseEntity.ok(new MessageResponse("Announcement registered successfully!"));
-    }
-
-    @GetMapping("/new")
-    @PreAuthorize("hasRole('OWNER')")
-    public String userAccess() {
-        return "User Content.";
-    }
-
-    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
-    @GetMapping("/list")
+    @GetMapping("/list/all")
     public List<Map<String, Object>> getAllAnnouncementsList() {
         List<Map<String, Object>> result = announcementService.getAnnouncementIdAndTitle();
         return result;
     }
 
-    @PreAuthorize("hasRole('CLIENT') or hasRole('OWNER') or hasRole('ADMIN')")
     @GetMapping(path = "/a/{id}")
     public Map<String, Object> getAnnouncementById(@PathVariable("id") String id) {
         System.out.println(id);
@@ -89,9 +50,10 @@ public class AnnouncementController {
                     "title", announcement.getTitle(),
                     "description", announcement.getDescription(),
                     "owner_id", announcement.getOwner().getId(),
-                    "username", announcement.getOwner().getUsername(),
+                    "displayName", announcement.getOwner().getDisplayName(),
                     "publication_date_time", announcement.getPublicationDateTime().toString(),
                     "images", announcement.getListUrlImages());
         }
     }
+
 }

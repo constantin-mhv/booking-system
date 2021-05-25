@@ -1,4 +1,4 @@
-package com.bookingsystem.models;
+package com.bookingsystem.models.user;
 
 public enum ERole {
     ROLE_USER,

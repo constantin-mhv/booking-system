@@ -1,6 +1,5 @@
-package com.bookingsystem.models.Announcement;
+package com.bookingsystem.models.announcement;
 
-import com.bookingsystem.models.Announcement.Announcement;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
