@@ -1,6 +1,7 @@
 package com.bookingsystem.models.announcement;
 
 import com.bookingsystem.models.user.User;
+import org.apache.tomcat.util.security.Escape;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -32,6 +33,10 @@ public class Announcement {
     @Enumerated(EnumType.STRING)
     private EStatus status = EStatus.WAITING_ACCEPTANCE;
 
+    private String country;
+    private String city;
+    @Enumerated(EnumType.STRING)
+    private ESport sportType;
     /* UTC time */
     @Temporal(TemporalType.TIMESTAMP)
     private Date publicationDateTime;
@@ -51,6 +56,33 @@ public class Announcement {
         this.title = title;
         this.description = description;
         this.images = images;
+//        this.id = UUID.randomUUID();
+    }
+
+    public Announcement(String title, String description, List<Image>images, String country, String city) {
+        this.title = title;
+        this.description = description;
+        this.images = images;
+        this.country = country;
+        this.city = city;
+//        this.id = UUID.randomUUID();
+    }
+
+    public Announcement(String title, String description, List<Image>images, String country, String city,
+                        String sportType) {
+        this.title = title;
+        this.description = description;
+        this.images = images;
+        if(country != null)
+            this.country = country;
+        else this.country = "Romania";
+        if(city != null)
+            this.city = city;
+        else this.city = "Bucuresti2";
+        if(sportType != null)
+            this.sportType = ESport.valueOf(sportType);
+        else
+            this.sportType = ESport.NO_TYPE;
 //        this.id = UUID.randomUUID();
     }
 
@@ -118,6 +150,38 @@ public class Announcement {
         this.images = images;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        System.out.println(city);
+        return city;
+    }
+
+    public ESport getSportType() {
+        return sportType;
+    }
+
+    public String getSportTypeString() {
+        if(sportType == null)
+            return null;
+        System.out.println(sportType.name());
+        return sportType.name();
+//        return sportType == null ? null : sportType.name();
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setSportType(ESport sportType) {
+        this.sportType = sportType;
+    }
 
     @Override
     public String toString() {

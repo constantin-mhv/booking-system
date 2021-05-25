@@ -13,8 +13,11 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, UUID
 
     Optional<Announcement> findById(UUID id);
 
-    @Query(value = "select bin_to_uuid(a.id) id, a.title from announcements a", nativeQuery = true)
+    @Query(value = "select bin_to_uuid(a.id) id, a.title, a.owner_id from announcements a", nativeQuery = true)
     List<Map<String, Object>> getAnnouncementIdAndTitle();
+
+    @Query(value = "select * from announcements", nativeQuery = true)
+    List<Announcement> getAllAnnouncements();
 
     @Query(value = "select bin_to_uuid(a.id) id, a.title, a.description " +
 			"" +

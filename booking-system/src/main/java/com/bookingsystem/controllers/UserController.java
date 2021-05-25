@@ -55,7 +55,7 @@ public class UserController {
         } else {
             User user = u.get();
             return Map.of(
-                    "displayName", user.getUsername(),
+                    "displayName", user.getDisplayName(),
                     "roles", user.getRole()
             );
         }

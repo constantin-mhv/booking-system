@@ -1,6 +1,7 @@
 package com.bookingsystem.controllers.owner;
 
 import com.bookingsystem.models.announcement.Announcement;
+import com.bookingsystem.models.announcement.ESport;
 import com.bookingsystem.models.announcement.Image;
 import com.bookingsystem.models.announcement.NewAnnouncement;
 import com.bookingsystem.models.user.User;
@@ -48,10 +49,14 @@ public class OwnerAnnouncementController {
                     "User not found",
                     HttpStatus.NOT_FOUND);
         }
+        System.out.println("city::::" + newAnnouncement.getCity());
         Announcement announcement = new Announcement(
                 newAnnouncement.getTitle(),
                 newAnnouncement.getDescription(),
-                newAnnouncement.getImages()
+                newAnnouncement.getImages(),
+                newAnnouncement.getCountry(),
+                newAnnouncement.getCity(),
+                newAnnouncement.getSportType()
         );
 
         for (Image img : newAnnouncement.getImages()) {

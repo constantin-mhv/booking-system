@@ -33,7 +33,19 @@ public class AnnouncementController {
 
     @GetMapping("/list/all")
     public List<Map<String, Object>> getAllAnnouncementsList() {
-        List<Map<String, Object>> result = announcementService.getAnnouncementIdAndTitle();
+        List<Announcement> announcementList = announcementRepository.getAllAnnouncements();
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        for(Announcement a : announcementList) {
+            result.add(Map.of(
+                    "id", a.getId().toString(),
+                    "title", a.getTitle(),
+                    "sportType", a.getSportTypeString(),
+                    "onwer_id", a.getOwner().getId().toString()
+            ));
+        }
+
+//        List<Map<String, Object>> result = announcementService.getAnnouncementIdAndTitle();
         return result;
     }
 
@@ -52,7 +64,11 @@ public class AnnouncementController {
                     "owner_id", announcement.getOwner().getId(),
                     "displayName", announcement.getOwner().getDisplayName(),
                     "publication_date_time", announcement.getPublicationDateTime().toString(),
-                    "images", announcement.getListUrlImages());
+                    "images", announcement.getListUrlImages(),
+                    "country", announcement.getCountry(),
+                    "sportType", announcement.getSportTypeString(),
+                    "city", announcement.getCity()
+            );
         }
     }
 

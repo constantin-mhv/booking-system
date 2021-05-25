@@ -9,6 +9,10 @@ public class NewAnnouncement {
     @NotBlank
     String description;
 
+    String country;
+    String city;
+    String sportType;
+
     List<Image> images;
 
     public void setTitle(String title) {
@@ -33,6 +37,30 @@ public class NewAnnouncement {
 
     public List<Image> getImages() {
         return images;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getSportType() {
+        return sportType;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setSportType(String sportType) {
+        this.sportType = sportType;
     }
 
     @Override
