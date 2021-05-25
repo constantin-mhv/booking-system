@@ -44,7 +44,7 @@ export default class Profile extends Component {
 
     const { currentUser, viewedUser } = this.state;
     var announcements = this.state.announcementsList.map(a => AnnPrev(a));
-    if (this.state.userReady && this.props.match.params.id == currentUser.id)
+    if (currentUser != null && this.state.userReady && this.props.match.params.id == currentUser.id)
       return <MyProfile/>;
 
     return (

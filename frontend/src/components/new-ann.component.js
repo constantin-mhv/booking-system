@@ -108,6 +108,7 @@ export default class NewAnn extends React.Component {
   }
 
   myChangeHandlerDirect = (name, value) => {
+    console.log(name, value);
     this.setState({ [name]: value });
   }
 

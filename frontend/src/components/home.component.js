@@ -22,6 +22,9 @@ export default class Home extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
+    if (currentUser == null)
+      return;
+
     this.setState({ currentUser: currentUser, userReady: true })
     RequestService.getAnnouncementListByUser(currentUser.id).then(
       response => {
@@ -54,6 +57,7 @@ export default class Home extends Component {
 
   render() {
     const { currentUser } = this.state;
+    
     if (this.state.userReady && isRole(currentUser, "ROLE_OWNER"))
       var announcements = this.state.announcementsList.map(a => AnnPrev(a, a.owner_id == currentUser.id));
     else

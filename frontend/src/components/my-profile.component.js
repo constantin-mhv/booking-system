@@ -29,11 +29,6 @@ export default class MyProfile extends Component {
         });
       });
   }
-  
-  handle(id) {
-    RequestService.deleteAnnouncement(id);
-    window.location.reload();
-  }
 
   render() {
     if (this.state.redirect) {
