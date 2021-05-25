@@ -6,6 +6,7 @@ import Select from "react-validation/build/select";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button";
 import RequestService from "../services/request.service";
+import { humanReadable } from "../functions/string-utils";
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 // const API_URL = 'http://localhost:8080/api/text/';
@@ -195,7 +196,7 @@ export default class NewAnn extends React.Component {
                     value={this.state.sportType}
                     onChange={this.myChangeHandler}
                   >
-                    {sportTypes.map(s => <option value={s}>{s}</option>)}
+                    {sportTypes.map(s => <option value={s}>{humanReadable(s)}</option>)}
                   </Select>
                 </div>
                 <div className="form-group">
@@ -203,7 +204,7 @@ export default class NewAnn extends React.Component {
                   <Textarea style={{ height: "100px" }}
                     className="form-control"
                     name="images"
-                    placeholder="Input image links, one on each line."
+                    placeholder="Input image or mp4 video links, one on each line."
                     onChange={this.myChangeHandler}
                     validations={[required, value => chracterCount(value, 0, 3000)]}
                   />

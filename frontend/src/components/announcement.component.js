@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import RequestService from "../services/request.service";
 import { Link, useParams } from "react-router-dom";
 import Carousel, {Dots} from '@brainhubeu/react-carousel';
+import { humanReadable } from "../functions/string-utils";
 import '@brainhubeu/react-carousel/lib/style.css';
 
 import UserService from "../services/user.service";
+
+function isVideo(address) {
+  if (address.endsWith(".mp4"))
+    return true;
+  return false;
+}
 
 export default class Announcement extends Component {
   constructor(props) {
@@ -31,8 +38,7 @@ export default class Announcement extends Component {
     var image_list = a.images;
     if (image_list == undefined)
       return null;
-    var slide_images = image_list.map(i => <img src={i} className="sliderimg" alt={i} class="slideshow-image"/>);
-    //var slide_images = image_list.map(i => <video className="sliderimg" alt={i} class="slideshow-image"><source src={i} type="video/mp4"/></video>);
+    var slide_images = image_list.map(i => <>{isVideo(i) ? <><video className="sliderimg" alt={i} class="slideshow-image"><source src={i} type="video/mp4"/></video></> : <img src={i} className="sliderimg" alt={i} class="slideshow-image"/>}</>);
     return (
       <div className="container">
         <header className="jumbotron">
@@ -41,7 +47,7 @@ export default class Announcement extends Component {
         </Carousel>
           <h4>{a.title}</h4>
           <h4>Owner: <Link to={"/u/" + a.owner_id} style={{color: "#00cf00"}}>{a.displayName}</Link></h4>
-          <h3>Sport type: {a.sportType}</h3>
+          <h3>Sport type: {humanReadable(a.sportType)}</h3>
           <h3>Location: {a.city + ", " + a.country}</h3>
           <h3>Publication date: {a.publication_date_time}</h3>
           <div className="shown-text">

@@ -9,6 +9,7 @@ label {
 }
 
 .card {
+  clear: both;
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
@@ -29,6 +30,13 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.navbar {
+	position: -webkit-sticky; /* Safari */
+	position: sticky;
+	top: 0;
+  z-index: 1;
 }
 
 .navbar-brand {
