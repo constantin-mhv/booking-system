@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import RequestService from "../services/request.service";
 import AuthService from "../services/auth.service";
-import getRoleName from "../functions/roles"
+import { getRoleName } from "../functions/roles"
+import AnnPrev from "../components/ann-prev.component";
 
 export default class MyProfile extends Component {
   constructor(props) {
@@ -28,6 +29,11 @@ export default class MyProfile extends Component {
         });
       });
   }
+  
+  handle(id) {
+    RequestService.deleteAnnouncement(id);
+    window.location.reload();
+  }
 
   render() {
     if (this.state.redirect) {
@@ -35,8 +41,7 @@ export default class MyProfile extends Component {
     }
 
     const { currentUser } = this.state;
-    var announcements = this.state.announcementsList.map(a => <div className="form-control" style={{ display: "flex" }}><Link to={"/a/" + a.id} style={{ color: "green" }}>{a.title}</Link>
-      <Link style={{ color: "red", marginLeft: "auto" }} onClick={_ => RequestService.deleteAnnouncement(a.id)}>Delete</Link></div>);
+    var announcements = this.state.announcementsList.map(a => AnnPrev(a, true));
 
     return (
       <div className="container">

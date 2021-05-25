@@ -1,4 +1,4 @@
-export default function getRoleName(role) {
+export function getRoleName(role) {
     role = role.toString();
     switch (role) {
         case "ROLE_ADMIN": return "Admin";
@@ -7,4 +7,8 @@ export default function getRoleName(role) {
         case "ROLE_BLOCKED": return "Blocked Owner";
         default: return role;
     }
+}
+
+export function isRole(user, role) {
+    return user.roles.toString() == role;
 }
