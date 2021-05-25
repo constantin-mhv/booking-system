@@ -21,7 +21,7 @@ const basicAxios = axios.create(
 class RequestService {
 
   getAnnouncementList() {
-    return authAxios.get("announcements/list");
+    return authAxios.get("announcements/list/all");
   }
 
   getAnnouncementDetails(id) {
@@ -29,7 +29,7 @@ class RequestService {
   }
   
   deleteAnnouncement(id) {
-    return authAxios.delete("announcements/a/" + id);
+    return authAxios.delete("owner/a/" + id);
   }
 
   getUserDetails(id) {
@@ -41,7 +41,7 @@ class RequestService {
   }
 
   postNewAnnouncement(title, description, images, country, region) {
-    return authAxios.post('announcements/new', {
+    return authAxios.post('/owner/a/new', {
       title,
       description,
       images,
