@@ -1,9 +1,6 @@
 package com.bookingsystem.controllers.owner;
 
-import com.bookingsystem.models.announcement.Announcement;
-import com.bookingsystem.models.announcement.ESport;
-import com.bookingsystem.models.announcement.Image;
-import com.bookingsystem.models.announcement.NewAnnouncement;
+import com.bookingsystem.models.announcement.*;
 import com.bookingsystem.models.user.User;
 import com.bookingsystem.repository.AnnouncementRepository;
 import com.bookingsystem.repository.UserRepository;
@@ -49,14 +46,14 @@ public class OwnerAnnouncementController {
                     "User not found",
                     HttpStatus.NOT_FOUND);
         }
-        System.out.println("city::::" + newAnnouncement.getCity());
         Announcement announcement = new Announcement(
                 newAnnouncement.getTitle(),
                 newAnnouncement.getDescription(),
                 newAnnouncement.getImages(),
                 newAnnouncement.getCountry(),
                 newAnnouncement.getCity(),
-                newAnnouncement.getSportType()
+                newAnnouncement.getSportType(),
+                newAnnouncement.getPrice()
         );
 
         for (Image img : newAnnouncement.getImages()) {
@@ -69,8 +66,42 @@ public class OwnerAnnouncementController {
         return ResponseEntity.ok(new MessageResponse("Announcement registered successfully!"));
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     void deleteAnnouncement(@PathVariable("id") String id) {
         announcementRepository.deleteById(UUID.fromString(id));
     }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> changeAnnouncement(@PathVariable("id") String id, NewAnnouncement changedAnnouncement) {
+        Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
+        Announcement announcement = null;
+        if (a.isPresent()) {
+            announcement = a.get();
+            announcement.update(changedAnnouncement);
+            return ResponseEntity.ok(new MessageResponse("Announcement changed successfully!"));
+        } else return new ResponseEntity<>(
+                "Announcement not found!",
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @PutMapping(path = "/state/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable("id") String id, String status) {
+        if (EStatus.valueOf(status) != EStatus.HIDDEN || EStatus.valueOf(status) != EStatus.ACTIVE)
+            return new ResponseEntity<>(
+                    HttpStatus.NOT_ACCEPTABLE
+            );
+        Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
+        Announcement announcement = null;
+        if (a.isPresent()) {
+            announcement = a.get();
+            announcement.setStatus(EStatus.valueOf(status));
+            return ResponseEntity.ok(new MessageResponse("Announcement status changed successfully!"));
+        } else return new ResponseEntity<>(
+                "Announcement not found!",
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+
 }

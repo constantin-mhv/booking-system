@@ -35,6 +35,7 @@ public class Announcement {
 
     private String country;
     private String city;
+    private float price;
     @Enumerated(EnumType.STRING)
     private ESport sportType;
     /* UTC time */
@@ -52,45 +53,25 @@ public class Announcement {
         this.description = description;
     }
 
-    public Announcement(String title, String description, List<Image>images) {
+    public Announcement(String title, String description, List<Image> images, String country, String city,
+                        String sportType, Float price) {
         this.title = title;
         this.description = description;
         this.images = images;
-//        this.id = UUID.randomUUID();
-    }
-
-    public Announcement(String title, String description, List<Image>images, String country, String city) {
-        this.title = title;
-        this.description = description;
-        this.images = images;
-        this.country = country;
-        this.city = city;
-//        this.id = UUID.randomUUID();
-    }
-
-    public Announcement(String title, String description, List<Image>images, String country, String city,
-                        String sportType) {
-        this.title = title;
-        this.description = description;
-        this.images = images;
-        if(country != null)
+        if (country != null)
             this.country = country;
         else this.country = "Romania";
-        if(city != null)
+        if (city != null)
             this.city = city;
         else this.city = "Bucuresti2";
-        if(sportType != null)
+        if (sportType != null)
             this.sportType = ESport.valueOf(sportType);
         else
             this.sportType = ESport.NO_TYPE;
-//        this.id = UUID.randomUUID();
+        if (price == null)
+            this.price = -1;
+        else this.price = price;
     }
-
-/*    public Announcement(String title, String description, User owner) {
-        this.title = title;
-        this.description = description;
-        this.owner = owner;
-    }*/
 
     public void setDescription(String description) {
         this.description = description;
@@ -155,7 +136,6 @@ public class Announcement {
     }
 
     public String getCity() {
-        System.out.println(city);
         return city;
     }
 
@@ -164,9 +144,8 @@ public class Announcement {
     }
 
     public String getSportTypeString() {
-        if(sportType == null)
+        if (sportType == null)
             return null;
-        System.out.println(sportType.name());
         return sportType.name();
 //        return sportType == null ? null : sportType.name();
     }
@@ -183,18 +162,25 @@ public class Announcement {
         this.sportType = sportType;
     }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
 
-        if(id != null) {
+        if (id != null) {
             return "Ad{" +
                     "id=" + id.toString() +
                     ", owner=" + owner +
                     ", title='" + title + '\'' +
                     ", description='" + description + '\'' +
                     '}';
-        }
-        else {
+        } else {
             return "Ad{" +
                     "id=null" +
                     ", owner=" + owner +
@@ -206,12 +192,49 @@ public class Announcement {
 
     public List<String> getListUrlImages() {
         List<String> result = new ArrayList<>();
-        for(Image img : images) {
+        for (Image img : images) {
             result.add(img.getUrl());
         }
         return result;
     }
 
+    public Map<String, Object> getMap() {
+        return Map.ofEntries(
+                Map.entry("title", getTitle()),
+                Map.entry("description", getDescription()),
+                Map.entry("owner_id", getOwner().getId()),
+                Map.entry("displayName", getOwner().getDisplayName()),
+                Map.entry("publication_date_time", getPublicationDateTime().toString()),
+                Map.entry("images", getListUrlImages()),
+                Map.entry("country", getCountry()),
+                Map.entry("sportType", getSportTypeString()),
+                Map.entry("city", getCity()),
+                Map.entry("price", getPrice())
+        );
+    }
+
+    public Map<String, Object> getMapLess() {
+        return Map.ofEntries(
+                Map.entry("id", getId().toString()),
+                Map.entry("title", getTitle()),
+                Map.entry("owner_id", getOwner().getId()),
+                Map.entry("publication_date_time", getPublicationDateTime().toString()),
+                Map.entry("sportType", getSportTypeString()),
+                Map.entry("price", getPrice())
+        );
+    }
+
+    public void update(NewAnnouncement changedAnnouncement) {
+        setTitle(changedAnnouncement.getTitle());
+        setDescription(changedAnnouncement.description);
+        setCity(changedAnnouncement.getCity());
+        setCountry(changedAnnouncement.getCountry());
+        setImages(changedAnnouncement.getImages());
+        setPrice(changedAnnouncement.getPrice());
+        setSportType(ESport.valueOf(changedAnnouncement.getSportType()));
+        if (status == EStatus.ACTIVE)
+            setStatus(EStatus.WAITING_ACCEPTANCE);
+    }
 
 
 }

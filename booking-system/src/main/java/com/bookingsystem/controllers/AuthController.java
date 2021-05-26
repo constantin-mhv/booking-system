@@ -55,12 +55,9 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        System.out.println(userDetails.getEmail());
-		System.out.println(userDetails.getUsername());
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        System.out.println("user: " + userDetails.getId());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),

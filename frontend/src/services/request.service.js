@@ -40,14 +40,15 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  postNewAnnouncement(title, description, sportType, images, country, city) {
+  postNewAnnouncement(title, description, sportType, images, country, city, price) {
     return authAxios.post('/owner/a/new', {
       title,
       description,
       sportType,
       images,
       country,
-      city
+      city,
+      price
     });
   }
   

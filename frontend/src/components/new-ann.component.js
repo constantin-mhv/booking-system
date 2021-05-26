@@ -130,7 +130,8 @@ export default class NewAnn extends React.Component {
         this.state.sportType,
         this.state.images.split(/\r\n|\n|\r/).map(value => value.trim()).filter(value => value != ""),
         this.state.country,
-        this.state.region
+        this.state.region,
+        Math.floor(Math.random() * 1000) /* TODO: send price */
       ).then(
         response => {
           this.setState({

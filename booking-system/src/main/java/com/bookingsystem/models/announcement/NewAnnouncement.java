@@ -13,6 +13,8 @@ public class NewAnnouncement {
     String city;
     String sportType;
 
+    Float price;
+
     List<Image> images;
 
     public void setTitle(String title) {
@@ -61,6 +63,14 @@ public class NewAnnouncement {
 
     public void setSportType(String sportType) {
         this.sportType = sportType;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     @Override
