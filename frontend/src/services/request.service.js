@@ -2,7 +2,7 @@ import axios from 'axios';
 import authHeader from './auth-header';
 import AuthService from './auth.service';
 
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = 'http://188.26.149.159:8080/api/';
 
 const authAxios = axios.create(
   {
@@ -27,9 +27,20 @@ class RequestService {
   getAnnouncementDetails(id) {
     return authAxios.get("announcements/a/" + id);
   }
-  
+
   deleteAnnouncement(id) {
     return authAxios.delete("owner/a/" + id);
+  }
+
+  changeVisibilityAnnouncement(id, visible) {
+    var status;
+    if (visible)
+      status = "ACTIVE";
+    else
+      status = "HIDDEN";
+    return authAxios.put("owner/a/state/" + id, {
+      status
+    });
   }
 
   getUserDetails(id) {
@@ -40,8 +51,21 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  postNewAnnouncement(title, description, sportType, images, country, city) {
-    return authAxios.post('/owner/a/new', {
+  getReservationsListByUser(id) {
+    return authAxios.get("client/reservations");
+  }
+
+  postAnnouncement(title, description, sportType, images, country, city, id) {
+    if (id == undefined)
+      return authAxios.post('/owner/a/new', {
+        title,
+        description,
+        sportType,
+        images,
+        country,
+        city
+      });
+    return authAxios.put('/owner/a/' + id, {
       title,
       description,
       sportType,
@@ -50,7 +74,7 @@ class RequestService {
       city
     });
   }
-  
+
   // Dummy Get
   getDummy() {
     return authAxios.get('/test/debug/get');

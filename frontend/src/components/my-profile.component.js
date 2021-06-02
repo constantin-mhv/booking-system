@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import RequestService from "../services/request.service";
 import AuthService from "../services/auth.service";
-import { getRoleName } from "../functions/roles"
+import { getRoleName, isRole } from "../functions/roles"
 import AnnPrev from "../components/ann-prev.component";
 
 export default class MyProfile extends Component {
@@ -13,7 +13,7 @@ export default class MyProfile extends Component {
       redirect: null,
       userReady: false,
       currentUser: { displayName: "" },
-      announcementsList: []
+      profileList: []
     };
   }
 
@@ -22,12 +22,22 @@ export default class MyProfile extends Component {
 
     if (!currentUser) this.setState({ redirect: "/home" });
     this.setState({ currentUser: currentUser, userReady: true })
-    RequestService.getAnnouncementListByUser(currentUser.id).then(
-      response => {
-        this.setState({
-          announcementsList: response.data
+    if (isRole(currentUser, "ROLE_OWNER")) {
+      RequestService.getAnnouncementListByUser(currentUser.id).then(
+        response => {
+          this.setState({
+            profileList: response.data
+          });
         });
-      });
+    }
+    else if (isRole(currentUser, "ROLE_CLIENT")) {
+      RequestService.getReservationListByUser(currentUser.id).then(
+        response => {
+          this.setState({
+            profileList: response.data
+          });
+        });
+    }
   }
 
   render() {
@@ -35,9 +45,12 @@ export default class MyProfile extends Component {
       return <Redirect to={this.state.redirect} />
     }
 
-    const { currentUser } = this.state;
-    var announcements = this.state.announcementsList.map(a => AnnPrev(a, true));
-
+    const { currentUser, profileList } = this.state;/* 
+    while (currentUser.roles == undefined) {}
+      if (currentUser.roles.toString() == "ROLE_OWNER")
+        profileList = this.state.profileList.map(a => AnnPrev(a, true));
+      else if (isRole(currentUser, "ROLE_CLIENT"))
+        profileList = this.state.profileList.map(a => AnnPrev(a, true)); */
     return (
       <div className="container">
         {(this.state.userReady) ?
@@ -64,10 +77,15 @@ export default class MyProfile extends Component {
               <strong>Role:</strong>{" "}
               {getRoleName(currentUser.roles)}
             </p>
-            {currentUser.roles.toString() == "ROLE_OWNER" ?
+            {isRole(currentUser, "ROLE_OWNER") ?
               <>
                 <strong>Announcements:</strong>
-                <h3>{announcements}</h3>
+                <h3>{profileList.map(a => AnnPrev(a, true))}</h3>
+              </> : null}
+            {isRole(currentUser, "ROLE_CLIENT") ?
+              <>
+                <strong>Reservations:</strong>
+                <h3>{profileList.map(a => AnnPrev(a, false))}</h3>
               </> : null}
           </div> : null}
       </div>

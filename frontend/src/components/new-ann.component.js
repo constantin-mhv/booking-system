@@ -124,13 +124,17 @@ export default class NewAnn extends React.Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      RequestService.postNewAnnouncement(
+      var id = undefined;
+      if (this.props.match != undefined)
+        id = this.props.match.params.id;
+      RequestService.postAnnouncement(
         this.state.title,
         this.state.desc,
         this.state.sportType,
         this.state.images.split(/\r\n|\n|\r/).map(value => value.trim()).filter(value => value != ""),
         this.state.country,
-        this.state.region
+        this.state.region,
+        id
       ).then(
         response => {
           this.setState({
@@ -155,6 +159,23 @@ export default class NewAnn extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.match != undefined)
+    RequestService.getAnnouncementDetails(this.props.match.params.id).then(
+      response => {
+        console.log(response.data);
+        this.setState({
+          title: response.data.title,
+          desc: response.data.description,
+          sportType: response.data.sportType,
+          images: response.data.images.toString().replaceAll(",","\n"),
+          country: response.data.country,
+          region: response.data.city,
+          id: this.props.match.params.id
+        });
+      });
+  }
+
   render() {
     return (
       <div className="col-md-12">
@@ -166,7 +187,8 @@ export default class NewAnn extends React.Component {
               this.form = c;
             }}
           >
-            <label className="form-title">Publish a new announcement</label>
+            {(this.state.id == undefined) ? <label className="form-title">Publish a new announcement</label> :
+            <label className="form-title">Modify announcement</label>}
             {!this.state.successful && (
               <div>
                 <div className="form-group">
@@ -175,6 +197,7 @@ export default class NewAnn extends React.Component {
                     type="text"
                     className="form-control"
                     name="title"
+                    value={this.state.title}
                     onChange={this.myChangeHandler}
                     validations={[required, value => chracterCount(value, 4, 120)]}
                   />
@@ -184,6 +207,7 @@ export default class NewAnn extends React.Component {
                   <Textarea style={{ height: "250px" }}
                     className="form-control"
                     name="desc"
+                    value={this.state.desc}
                     onChange={this.myChangeHandler}
                     validations={[required, value => chracterCount(value, 0, 4000)]}
                   />
@@ -204,6 +228,7 @@ export default class NewAnn extends React.Component {
                   <Textarea style={{ height: "100px" }}
                     className="form-control"
                     name="images"
+                    value={this.state.images}
                     placeholder="Input image or mp4 video links, one on each line."
                     onChange={this.myChangeHandler}
                     validations={[required, value => chracterCount(value, 0, 3000)]}

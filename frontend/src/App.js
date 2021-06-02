@@ -98,6 +98,7 @@ class App extends Component {
             <Route path="/admin" component={BoardAdmin} />
             <Route path="/debug" component={DebugComponent} />
             <Route path="/new-announcement" component={NewAnn} />
+            <Route path="/a/:id/edit" component={NewAnn} />
             <Route path="/a/:id" component={Announcement} />
             <Route path="/u/:id" component={Profile} />
           </Switch>

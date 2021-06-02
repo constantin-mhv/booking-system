@@ -38,7 +38,7 @@ export default class Announcement extends Component {
     var image_list = a.images;
     if (image_list == undefined)
       return null;
-    var slide_images = image_list.map(i => <>{isVideo(i) ? <><video className="sliderimg" alt={i} class="slideshow-image"><source src={i} type="video/mp4"/></video></> : <img src={i} className="sliderimg" alt={i} class="slideshow-image"/>}</>);
+    var slide_images = image_list.map(i => <>{isVideo(i) ? <><video className="sliderimg" alt={i} class="slideshow-image"><source src={i} type="video/mp4"/></video></> : <img src={i} className="slideshow-image" alt={i}/>}</>);
     return (
       <div className="container">
         <header className="jumbotron">
