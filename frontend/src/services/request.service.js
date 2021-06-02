@@ -55,7 +55,7 @@ class RequestService {
     return authAxios.get("client/reservations");
   }
 
-  postAnnouncement(title, description, sportType, images, country, city, id) {
+  postAnnouncement(title, description, sportType, images, country, city, price, id) {
     if (id == undefined)
       return authAxios.post('/owner/a/new', {
         title,
@@ -63,7 +63,8 @@ class RequestService {
         sportType,
         images,
         country,
-        city
+        city,
+        price
       });
     return authAxios.put('/owner/a/' + id, {
       title,
@@ -71,7 +72,8 @@ class RequestService {
       sportType,
       images,
       country,
-      city
+      city,
+      price
     });
   }
 
