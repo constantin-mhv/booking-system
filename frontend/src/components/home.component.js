@@ -26,12 +26,6 @@ export default class Home extends Component {
       return;
 
     this.setState({ currentUser: currentUser, userReady: true })
-    RequestService.getAnnouncementListByUser(currentUser.id).then(
-      response => {
-        this.setState({
-          announcementsList: response.data
-        });
-      });
     RequestService.getAnnouncementList().then(
       response => {
         this.setState({

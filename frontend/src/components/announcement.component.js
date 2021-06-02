@@ -4,8 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import Carousel, {Dots} from '@brainhubeu/react-carousel';
 import { humanReadable } from "../functions/string-utils";
 import '@brainhubeu/react-carousel/lib/style.css';
+import Calendar from "../components/calendar.component";
 
-import UserService from "../services/user.service";
+import AuthService from "../services/auth.service";
+import { isRole } from "../functions/roles";
 
 function isVideo(address) {
   if (address.endsWith(".mp4"))
@@ -18,12 +20,16 @@ export default class Announcement extends Component {
     super(props);
 
     this.state = {
+      currentUser: undefined,
       content: "",
       announcementDetails: {}
     };
   }
 
   componentDidMount() {
+    const currentUser = AuthService.getCurrentUser();
+
+    this.setState({ currentUser: currentUser, userReady: true })
     RequestService.getAnnouncementDetails(this.props.match.params.id).then(
       response => {
         console.log(response.data);
@@ -45,7 +51,8 @@ export default class Announcement extends Component {
           <Carousel plugins={['arrows']}>
           {slide_images}
         </Carousel>
-          <h4>{a.title}</h4>
+          <h4>{a.title} {a.owner_id == this.state.currentUser.id ?
+            <Link to={"/a/" + this.props.match.params.id + "/edit"} style={{color: "#ddbb00"}}>(Modify)</Link>: null}</h4>
           <h4>Owner: <Link to={"/u/" + a.owner_id} style={{color: "#00cf00"}}>{a.displayName}</Link></h4>
           <h3>Sport type: {humanReadable(a.sportType)}</h3>
           <h3>Location: {a.city + ", " + a.country}</h3>
@@ -53,6 +60,7 @@ export default class Announcement extends Component {
           <div className="shown-text">
             {a.description}</div>
         {/* <Dots number={slide_images.length} thumbnails={slide_images} value={this.state.value} onChange={this.onchange} number={slide_images.length} /> */}
+        {isRole(this.state.currentUser, "ROLE_CLIENT") ? <Calendar/> : null}
         </header>
       </div>
     );

@@ -16,6 +16,7 @@ import BoardAdmin from "./components/board-admin.component";
 import NewAnn from "./components/new-ann.component";
 import Announcement from "./components/announcement.component";
 import DebugComponent from "./components/debug.component";
+import Calendar from "./components/calendar.component";
 
 class App extends Component {
   constructor(props) {
@@ -101,6 +102,7 @@ class App extends Component {
             <Route path="/a/:id/edit" component={NewAnn} />
             <Route path="/a/:id" component={Announcement} />
             <Route path="/u/:id" component={Profile} />
+            <Route path="/calendar" component={Calendar} />
           </Switch>
         </div>
       </div>

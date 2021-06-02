@@ -161,7 +161,7 @@ export default class NewAnn extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.match != undefined)
+    if (this.props.match != undefined && this.props.match.params.id != undefined)
     RequestService.getAnnouncementDetails(this.props.match.params.id).then(
       response => {
         console.log(response.data);

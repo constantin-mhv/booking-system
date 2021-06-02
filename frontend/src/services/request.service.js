@@ -51,11 +51,12 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  getReservationsListByUser(id) {
+  getReservationListByUser(id) {
     return authAxios.get("client/reservations");
   }
 
   postAnnouncement(title, description, sportType, images, country, city, price, id) {
+    console.log(price);
     if (id == undefined)
       return authAxios.post('/owner/a/new', {
         title,
