@@ -58,3 +58,18 @@ label {
   margin-right: auto;
   width: 50%;
 }
+
+.form-checkbox {
+  margin-right: 30px;
+}
+
+#sameline_container
+{
+    text-align:center;
+}
+#sameline_block1, #sameline_block2
+{
+    display:inline-block;
+    vertical-align: middle;
+    text-align:left;
+}

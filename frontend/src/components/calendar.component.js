@@ -70,7 +70,7 @@ export default class Calendar extends React.Component {
       <div>
         <DayPicker
           className="Range"
-          numberOfMonths={2}
+          numberOfMonths={1}
           fromMonth={from}
           selectedDays={selectedDays}
           disabledDays={disabledDays}

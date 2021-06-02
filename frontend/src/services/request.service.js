@@ -2,7 +2,7 @@ import axios from 'axios';
 import authHeader from './auth-header';
 import AuthService from './auth.service';
 
-const API_URL = 'http://188.26.149.159:8080/api/';
+const API_URL = 'http://' + window.location.hostname + ':8080/api/'
 
 const authAxios = axios.create(
   {

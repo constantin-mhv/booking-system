@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://188.26.149.159:8080/api/test/';
+const API_URL = 'http://' + window.location.hostname + ':8080/api/test/'
 
 class UserService {
   getPublicContent() {
