@@ -42,7 +42,7 @@ public class AnnouncementController {
 
 
 
-    @GetMapping("/list")
+    @PutMapping("/list")
     public List<Map<String, Object>> getAllAnnouncementsListSelect(
             @Valid @NotNull @RequestBody SelectCondition selectCondition) {
         Sort.Direction sort = null;

@@ -55,8 +55,8 @@ public class OwnerAnnouncementController {
                 newAnnouncement.getCity(),
                 newAnnouncement.getSportType(),
                 newAnnouncement.getPrice(),
-                newAnnouncement.getDayStart(),
-                newAnnouncement.getDayEnd(),
+                newAnnouncement.getDateStart(),
+                newAnnouncement.getDateEnd(),
                 newAnnouncement.getWeekdays()
         );
 

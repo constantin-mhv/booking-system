@@ -45,8 +45,8 @@ public class Announcement {
 /*    @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime currentDateTime;*/
 
-    private long dayStart;
-    private long dayEnd;
+    private long dateStart;
+    private long dateEnd;
     @Size(max = 10)
     private String weekdays;
 
@@ -59,7 +59,7 @@ public class Announcement {
     }
 
     public Announcement(String title, String description, List<Image> images, String country, String city,
-                        String sportType, Float price, long dayStart, long dayEnd, String weekdays) {
+                        String sportType, Float price, long dateStart, long dateEnd, String weekdays) {
         this.title = title;
         this.description = description;
         this.images = images;
@@ -76,8 +76,8 @@ public class Announcement {
         if (price == null)
             this.price = -1;
         else this.price = price;
-        this.dayStart = dayStart;
-        this.dayEnd = dayEnd;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.weekdays = weekdays;
     }
 
@@ -178,24 +178,24 @@ public class Announcement {
         this.price = price;
     }
 
-    public long getDayStart() {
-        return dayStart;
+    public long getDateStart() {
+        return dateStart;
     }
 
-    public long getDayEnd() {
-        return dayEnd;
+    public long getDateEnd() {
+        return dateEnd;
     }
 
     public String getWeekdays() {
         return weekdays;
     }
 
-    public void setDayStart(long dayStart) {
-        this.dayStart = dayStart;
+    public void setDateStart(long dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public void setDayEnd(long dayEnd) {
-        this.dayEnd = dayEnd;
+    public void setDateEnd(long dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public void setWeekdays(String weekdays) {
@@ -241,7 +241,10 @@ public class Announcement {
                 Map.entry("country", getCountry()),
                 Map.entry("sportType", getSportTypeString()),
                 Map.entry("city", getCity()),
-                Map.entry("price", getPrice())
+                Map.entry("price", getPrice()),
+                Map.entry("weekdays", getWeekdays()),
+                Map.entry("dateStart", getDateStart()),
+                Map.entry("dateEnd", getDateEnd())
         );
     }
 

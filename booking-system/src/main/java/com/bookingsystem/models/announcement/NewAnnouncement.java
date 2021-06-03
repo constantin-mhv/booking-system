@@ -13,8 +13,8 @@ public class NewAnnouncement {
     private String city;
     private String sportType;
 
-    private long dayStart;
-    private long dayEnd;
+    private long dateStart;
+    private long dateEnd;
     private String weekdays;
 
     private Float price;
@@ -77,24 +77,24 @@ public class NewAnnouncement {
         this.price = price;
     }
 
-    public long getDayStart() {
-        return dayStart;
+    public long getDateStart() {
+        return dateStart;
     }
 
-    public long getDayEnd() {
-        return dayEnd;
+    public long getDateEnd() {
+        return dateEnd;
     }
 
     public String getWeekdays() {
         return weekdays;
     }
 
-    public void setDayStart(long dayStart) {
-        this.dayStart = dayStart;
+    public void setDateStart(long dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public void setDayEnd(long dayEnd) {
-        this.dayEnd = dayEnd;
+    public void setDateEnd(long dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public void setWeekdays(String weekdays) {

@@ -23,10 +23,10 @@ public class SelectCondition {
         if(priceMax == null)
             this.priceMax = 10000000f;
         else this.priceMax = priceMax;
-        if (!sortCondition.equals("-")) {
-            this.sortCondition = sortCondition;
+        if (sortCondition == null) {
+            this.sortCondition = "DESC";
         } else
-            this.sortCondition = "ASC";
+            this.sortCondition = sortCondition;
         this.sortTarget = Objects.requireNonNullElse(sortTarget, "publication_date_time");
     }
 
