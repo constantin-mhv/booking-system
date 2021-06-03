@@ -55,7 +55,7 @@ class RequestService {
     return authAxios.get("client/reservations");
   }
 
-  postAnnouncement(title, description, sportType, images, country, city, price, id) {
+  postAnnouncement(title, description, sportType, images, country, city, dateStart, dateEnd, weekdays, price, id) {
     console.log(price);
     if (id == undefined)
       return authAxios.post('/owner/a/new', {
@@ -65,6 +65,9 @@ class RequestService {
         images,
         country,
         city,
+        dateStart,
+        dateEnd,
+        weekdays,
         price
       });
     return authAxios.put('/owner/a/' + id, {
