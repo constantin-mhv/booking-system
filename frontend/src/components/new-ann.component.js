@@ -116,7 +116,7 @@ export default class NewAnn extends React.Component {
       from: null,
       to: null,
       enteredTo: null,
-      weekdays: "1111111"
+      weekdays: "1111111".split('')
     };
   }
 
@@ -127,6 +127,8 @@ export default class NewAnn extends React.Component {
   }
 
   handleDayClick(day) {
+    if (day < new Date())
+      return;
     const { from, to } = this.state;
     if (from && to && day >= from) {
       this.setState({
@@ -167,11 +169,20 @@ export default class NewAnn extends React.Component {
   myChangeHandler = (event) => {
     console.log(event);
     this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state);
   }
 
   myChangeHandlerDirect = (name, value) => {
     console.log(name, value);
     this.setState({ [name]: value });
+    console.log(this.state.weekdays);
+  }
+
+  myChangeHandlerDay = (index, value) => {
+    var aux = this.state.weekdays;
+    aux[index] = value;
+    this.setState({ weekdays: aux });
+    console.log(this.state.weekdays);
   }
 
   handlePost(e) {
@@ -195,6 +206,9 @@ export default class NewAnn extends React.Component {
         this.state.images.split(/\r\n|\n|\r/).map(value => value.trim()).filter(value => value != ""),
         this.state.country,
         this.state.region,
+        this.state.from.getTime(),
+        this.state.to.getTime(),
+        this.state.weekdays.join(''),
         Math.floor(Math.random() * 1000),
         id
       ).then(
@@ -241,17 +255,24 @@ export default class NewAnn extends React.Component {
   render() {
     const { from, to, enteredTo, weekdays } = this.state;
     const modifiers = { start: from, end: enteredTo };
-    const disabledDays = { before: this.state.from };
+    const disabledDays = { before: this.state.from, before: new Date() };
     const selectedDays = [from, { from, to: enteredTo }];
-    const weekdaysSeparate = weekdays.split('');
+    var weekdaysSeparate = [];
     for (var i = 0; i < 7; i++) {
       const weekdayTag = weekdayNames[i].toLocaleLowerCase();
       const weekdayName = humanReadable(weekdayNames[i]);
-      weekdaysSeparate[i] = 
-      <>
-      <label htmlFor={weekdayTag}>
-      <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" className="form-checkbox"></input>
-      {weekdayName}</label>
+      weekdaysSeparate[i] =
+        <>
+          <label htmlFor={weekdayTag}>
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              name={i}
+              checked={weekdays[i] == "1"}
+              index={i}
+              onChange={(e) => {
+                this.myChangeHandlerDay(e.target.name, e.target.checked ? "1" : "0")}}>
+            </input>{weekdayName}</label>
         </>;
     }
     return (
@@ -328,28 +349,33 @@ export default class NewAnn extends React.Component {
                 </div>
                 <div className="form-group" id="sameline_container">
                   <div id="sameline_block1">
-                  <DayPicker
-                    className="Range"
-                    numberOfMonths={1}
-                    fromMonth={from}
-                    selectedDays={selectedDays}
-                    disabledDays={disabledDays}
-                    modifiers={modifiers}
-                    onDayClick={this.handleDayClick}
-                    onDayMouseEnter={this.handleDayMouseEnter}
-                  /><div>
-                    {!from && !to && 'Please select the first day.'}
-                    {from && !to && 'Please select the last day.'}
-                    {from &&
-                      to &&
-                      `Selected from ${from.toLocaleDateString()} to
-                        ${to.toLocaleDateString()}`}{' '}
-                    {from && to && (
-                      <button className="link" onClick={this.handleResetClick}>
-                        Reset
-                      </button>
-                    )}
+                    <DayPicker
+                      className="Range"
+                      numberOfMonths={1}
+                      fromMonth={from}
+                      selectedDays={selectedDays}
+                      disabledDays={disabledDays}
+                      modifiers={modifiers}
+                      onDayClick={this.handleDayClick}
+                      onDayMouseEnter={this.handleDayMouseEnter}
+                    />
                   </div>
+                  <div id="sameline_block2">
+                    {weekdaysSeparate}
+                  </div>
+                </div>
+                <div className="form-group">
+                  {!from && !to && 'Please select the first day.'}
+                  {from && !to && 'Please select the last day.'}
+                  {from &&
+                    to &&
+                    `Selected from ${from.toLocaleDateString("ro")} to
+                        ${to.toLocaleDateString("ro")}`}{' '}
+                  {from && to && (
+                    <button className="btn btn-primary" onClick={this.handleResetClick}>
+                      Reset
+                    </button>
+                  )}
                   <Helmet>
                     <style>{`
           .Range .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -360,10 +386,7 @@ export default class NewAnn extends React.Component {
             border-radius: 0 !important;
           }
         `}</style>
-                  </Helmet></div>
-                  <div id="sameline_block2">
-                  {weekdaysSeparate}
-                  </div>
+                  </Helmet>
                 </div>
                 <div className="form-group">
                   <button
