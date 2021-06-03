@@ -45,6 +45,11 @@ public class Announcement {
 /*    @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime currentDateTime;*/
 
+    private long dayStart;
+    private long dayEnd;
+    @Size(max = 10)
+    private String weekdays;
+
     public Announcement() {
     }
 
@@ -54,7 +59,7 @@ public class Announcement {
     }
 
     public Announcement(String title, String description, List<Image> images, String country, String city,
-                        String sportType, Float price) {
+                        String sportType, Float price, long dayStart, long dayEnd, String weekdays) {
         this.title = title;
         this.description = description;
         this.images = images;
@@ -71,6 +76,9 @@ public class Announcement {
         if (price == null)
             this.price = -1;
         else this.price = price;
+        this.dayStart = dayStart;
+        this.dayEnd = dayEnd;
+        this.weekdays = weekdays;
     }
 
     public void setDescription(String description) {
@@ -170,6 +178,30 @@ public class Announcement {
         this.price = price;
     }
 
+    public long getDayStart() {
+        return dayStart;
+    }
+
+    public long getDayEnd() {
+        return dayEnd;
+    }
+
+    public String getWeekdays() {
+        return weekdays;
+    }
+
+    public void setDayStart(long dayStart) {
+        this.dayStart = dayStart;
+    }
+
+    public void setDayEnd(long dayEnd) {
+        this.dayEnd = dayEnd;
+    }
+
+    public void setWeekdays(String weekdays) {
+        this.weekdays = weekdays;
+    }
+
     @Override
     public String toString() {
 
@@ -226,7 +258,7 @@ public class Announcement {
 
     public void update(NewAnnouncement changedAnnouncement) {
         setTitle(changedAnnouncement.getTitle());
-        setDescription(changedAnnouncement.description);
+        setDescription(changedAnnouncement.getDescription());
         setCity(changedAnnouncement.getCity());
         setCountry(changedAnnouncement.getCountry());
         setImages(changedAnnouncement.getImages());

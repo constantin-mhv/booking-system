@@ -6,5 +6,5 @@ public enum EStatus {
     ACTIVE,
     HIDDEN,
     EXPIRED,
-    BLOCKED,
+    BLOCKED
 }

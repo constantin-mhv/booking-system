@@ -5,17 +5,21 @@ import java.util.List;
 
 public class NewAnnouncement {
     @NotBlank
-    String title;
+    private String title;
     @NotBlank
-    String description;
+    private String description;
 
-    String country;
-    String city;
-    String sportType;
+    private String country;
+    private String city;
+    private String sportType;
 
-    Float price;
+    private long dayStart;
+    private long dayEnd;
+    private String weekdays;
 
-    List<Image> images;
+    private Float price;
+
+    private List<Image> images;
 
     public void setTitle(String title) {
         this.title = title;
@@ -71,6 +75,30 @@ public class NewAnnouncement {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public long getDayStart() {
+        return dayStart;
+    }
+
+    public long getDayEnd() {
+        return dayEnd;
+    }
+
+    public String getWeekdays() {
+        return weekdays;
+    }
+
+    public void setDayStart(long dayStart) {
+        this.dayStart = dayStart;
+    }
+
+    public void setDayEnd(long dayEnd) {
+        this.dayEnd = dayEnd;
+    }
+
+    public void setWeekdays(String weekdays) {
+        this.weekdays = weekdays;
     }
 
     @Override

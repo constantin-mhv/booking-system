@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,7 +54,10 @@ public class OwnerAnnouncementController {
                 newAnnouncement.getCountry(),
                 newAnnouncement.getCity(),
                 newAnnouncement.getSportType(),
-                newAnnouncement.getPrice()
+                newAnnouncement.getPrice(),
+                newAnnouncement.getDayStart(),
+                newAnnouncement.getDayEnd(),
+                newAnnouncement.getWeekdays()
         );
 
         for (Image img : newAnnouncement.getImages()) {
@@ -63,6 +67,7 @@ public class OwnerAnnouncementController {
         announcement.setDateTime();
         announcementRepository.save(announcement);
 
+
         return ResponseEntity.ok(new MessageResponse("Announcement registered successfully!"));
     }
 
@@ -71,36 +76,31 @@ public class OwnerAnnouncementController {
         announcementRepository.deleteById(UUID.fromString(id));
     }
 
+
+
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> changeAnnouncement(@PathVariable("id") String id, NewAnnouncement changedAnnouncement) {
-        Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
-        Announcement announcement = null;
-        if (a.isPresent()) {
-            announcement = a.get();
-            announcement.update(changedAnnouncement);
-            return ResponseEntity.ok(new MessageResponse("Announcement changed successfully!"));
-        } else return new ResponseEntity<>(
-                "Announcement not found!",
-                HttpStatus.NOT_FOUND
+    public ResponseEntity<?> changeAnnouncement(@PathVariable("id") String id, @Valid @NotNull @RequestBody NewAnnouncement changedAnnouncement) {
+
+        announcementRepository.updateAnnouncement(
+                id,
+                changedAnnouncement.getTitle(),
+                changedAnnouncement.getDescription(),
+                changedAnnouncement.getCountry(),
+                changedAnnouncement.getCity(),
+                changedAnnouncement.getSportType(),
+                changedAnnouncement.getPrice()
         );
+        return ResponseEntity.ok(new MessageResponse("Announcement changed successfully!"));
     }
 
     @PutMapping(path = "/state/{id}")
-    public ResponseEntity<?> changeStatus(@PathVariable("id") String id, String status) {
-        if (EStatus.valueOf(status) != EStatus.HIDDEN || EStatus.valueOf(status) != EStatus.ACTIVE)
-            return new ResponseEntity<>(
-                    HttpStatus.NOT_ACCEPTABLE
-            );
-        Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
-        Announcement announcement = null;
-        if (a.isPresent()) {
-            announcement = a.get();
-            announcement.setStatus(EStatus.valueOf(status));
-            return ResponseEntity.ok(new MessageResponse("Announcement status changed successfully!"));
-        } else return new ResponseEntity<>(
-                "Announcement not found!",
-                HttpStatus.NOT_FOUND
-        );
+    public ResponseEntity<?> changeStatus(@PathVariable("id") String id, @NotNull @RequestBody Map<String, String> parameters) {
+//        if (EStatus.valueOf(status) != EStatus.WAITING_ACCEPTANCE || EStatus.valueOf(status) != EStatus.HIDDEN || EStatus.valueOf(status) != EStatus.ACTIVE)
+//            return new ResponseEntity<>(
+//                    HttpStatus.NOT_ACCEPTABLE
+//            );
+        announcementRepository.updateAnnouncementStatus(id, parameters.get("status"));
+        return ResponseEntity.ok(new MessageResponse("Announcement status changed successfully!"));
     }
 
 

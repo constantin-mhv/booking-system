@@ -1,14 +1,21 @@
 package com.bookingsystem.controllers;
 
 import com.bookingsystem.models.announcement.Announcement;
+import com.bookingsystem.models.announcement.EStatus;
+import com.bookingsystem.models.announcement.SelectCondition;
 import com.bookingsystem.repository.AnnouncementRepository;
 import com.bookingsystem.services.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,6 +40,31 @@ public class AnnouncementController {
         return result;
     }
 
+
+
+    @GetMapping("/list")
+    public List<Map<String, Object>> getAllAnnouncementsListSelect(
+            @Valid @NotNull @RequestBody SelectCondition selectCondition) {
+        Sort.Direction sort = null;
+        if (selectCondition.getSortCondition().equals("ASC"))
+            sort = Sort.Direction.ASC;
+        if (selectCondition.getSortCondition().equals("DESC"))
+            sort = Sort.Direction.DESC;
+        assert sort != null;
+        List<Map<String, Object>> result =
+                announcementRepository.findAnnouncementsWithCond(
+                        selectCondition.getCountry(),
+                        selectCondition.getCity(),
+                        selectCondition.getSportType(),
+                        selectCondition.getPriceMin(),
+                        selectCondition.getPriceMax(),
+                        PageRequest.of(0, 100, Sort.by(sort, selectCondition.getSortTarget()))
+                );
+        for (Map<String, Object> a : result)
+            System.out.println(a.get("title"));
+        return result;
+    }
+
     @GetMapping(path = "/a/{id}")
     public Map<String, Object> getAnnouncementById(@PathVariable("id") String id) {
         Optional<Announcement> a = announcementService.findById(UUID.fromString(id));
@@ -44,4 +76,10 @@ public class AnnouncementController {
         }
     }
 
+    @GetMapping(path = "/debug/get")
+    public List<Map<String, Object>> getAllAnnouncementsSelect(@Valid @NotNull @RequestBody
+                                                                       SelectCondition selectCondition) {
+
+        return null;
+    }
 }
