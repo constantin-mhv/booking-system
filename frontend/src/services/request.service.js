@@ -59,7 +59,7 @@ class RequestService {
     return authAxios.get("users/u/" + id + "/list");
   }
 
-  getReservationListByUser(id) {
+  getReservationListByUser() {
     return authAxios.get("client/reservations");
   }
   

@@ -31,7 +31,7 @@ export default class MyProfile extends Component {
         });
     }
     else if (isRole(currentUser, "ROLE_CLIENT")) {
-      RequestService.getReservationListByUser(currentUser.id).then(
+      RequestService.getReservationListByUser().then(
         response => {
           this.setState({
             profileList: response.data
