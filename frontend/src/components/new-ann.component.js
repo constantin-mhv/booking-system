@@ -7,7 +7,7 @@ import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button";
 import RequestService from "../services/request.service";
 import { humanReadable } from "../functions/string-utils";
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Helmet from 'react-helmet';
 import DayPicker, { DateUtils } from 'react-day-picker';
 
@@ -80,6 +80,21 @@ const required = value => {
   }
 };
 
+const requiredDate = ({ from, to, weekdays }) => {
+  if (from == undefined || to == undefined)
+    return (
+      <div className="alert alert-danger" role="alert">
+        The interval has not been selected!
+      </div>
+    );
+  if (!weekdays.includes("1"))
+    return (
+      <div className="alert alert-danger" role="alert">
+        At least one day of the week must be selected!
+      </div>
+    );
+};
+
 const characterCount = (value, min, max) => {
   if (value.length < min) {
     return (
@@ -108,15 +123,16 @@ export default class NewAnn extends React.Component {
       title: "",
       desc: "",
       sportType: sportTypes[0],
+      price: "0.0",
       images: "",
       country: "Romania",
       region: "Bucuresti",
-      successful: false,
-      message: "",
       from: null,
       to: null,
       enteredTo: null,
-      weekdays: "1111111".split('')
+      weekdays: "1111111".split(''),
+      successful: false,
+      message: ""
     };
   }
 
@@ -126,8 +142,8 @@ export default class NewAnn extends React.Component {
     return !from || isBeforeFirstDay || isRangeSelected;
   }
 
-  handleDayClick(day) {
-    if (day < new Date())
+  handleDayClick(day, { disabled }) {
+    if (disabled)
       return;
     const { from, to } = this.state;
     if (from && to && day >= from) {
@@ -203,13 +219,13 @@ export default class NewAnn extends React.Component {
         this.state.title,
         this.state.desc,
         this.state.sportType,
+        parseFloat(this.state.price),
         this.state.images.split(/\r\n|\n|\r/).map(value => value.trim()).filter(value => value != ""),
         this.state.country,
         this.state.region,
         this.state.from.getTime(),
         this.state.to.getTime(),
         this.state.weekdays.join(''),
-        Math.floor(Math.random() * 1000),
         id
       ).then(
         response => {
@@ -244,9 +260,13 @@ export default class NewAnn extends React.Component {
             title: response.data.title,
             desc: response.data.description,
             sportType: response.data.sportType,
+            price: response.data.price.toString(),
             images: response.data.images.toString().replaceAll(",", "\n"),
             country: response.data.country,
             region: response.data.city,
+            from: new Date(response.data.dateStart),
+            to: new Date(response.data.dateEnd),
+            weekdays: response.data.weekdays,
             id: this.props.match.params.id
           });
         });
@@ -269,9 +289,10 @@ export default class NewAnn extends React.Component {
               className="form-checkbox"
               name={i}
               checked={weekdays[i] == "1"}
-              index={i}
               onChange={(e) => {
-                this.myChangeHandlerDay(e.target.name, e.target.checked ? "1" : "0")}}>
+                this.myChangeHandlerDay(e.target.name, e.target.checked ? "1" : "0")
+              }}
+            >
             </input>{weekdayName}</label>
         </>;
     }
@@ -322,12 +343,24 @@ export default class NewAnn extends React.Component {
                   </Select>
                 </div>
                 <div className="form-group">
+                  <label htmlFor="price">Price</label>
+                <Input
+                    type="text"
+                    pattern="[0-9]*.[0-9]*"
+                    className="form-control"
+                    name="price"
+                    value={this.state.price}
+                    onChange={this.myChangeHandler}
+                    validations={[required]}
+                  />
+                  </div>
+                <div className="form-group">
                   <label htmlFor="images">Image Links</label>
                   <Textarea style={{ height: "100px" }}
                     className="form-control"
                     name="images"
                     value={this.state.images}
-                    placeholder="Input image or mp4 video links, one on each line."
+                    placeholder="Input image links, one on each line."
                     onChange={this.myChangeHandler}
                     validations={[required, value => characterCount(value, 0, 3000)]}
                   />
@@ -350,6 +383,7 @@ export default class NewAnn extends React.Component {
                 <div className="form-group" id="sameline_container">
                   <div id="sameline_block1">
                     <DayPicker
+                      firstDayOfWeek={1}
                       className="Range"
                       numberOfMonths={1}
                       fromMonth={from}
@@ -388,6 +422,13 @@ export default class NewAnn extends React.Component {
         `}</style>
                   </Helmet>
                 </div>
+                <Input
+                  hidden="true"
+                  disabled="true"
+                  type="none"
+                  className="form-control"
+                  validations={[_ => requiredDate(this.state)]}
+                />
                 <div className="form-group">
                   <button
                     className="btn btn-primary btn-block"
@@ -424,7 +465,7 @@ export default class NewAnn extends React.Component {
             />
           </Form>
         </div>
-      </div >
+      </div>
     );
     /* return (
       <form>

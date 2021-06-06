@@ -20,8 +20,16 @@ const basicAxios = axios.create(
 
 class RequestService {
 
-  getAnnouncementList() {
-    return authAxios.get("announcements/list/all");
+  putAnnouncementList(sortCondition, sortTarget, country, city, sportType, priceMin, priceMax) {
+    return authAxios.put("announcements/list", {
+      sortCondition,
+      sortTarget,
+      country,
+      city,
+      sportType,
+      priceMin,
+      priceMax
+    });
   }
 
   getAnnouncementDetails(id) {
@@ -54,41 +62,47 @@ class RequestService {
   getReservationListByUser(id) {
     return authAxios.get("client/reservations");
   }
+  
+  postReservation(id, date) {
+    return authAxios.post("client/a/book/" + id, {
+      date
+    });
+  }
 
-  postAnnouncement(title, description, sportType, images, country, city, dateStart, dateEnd, weekdays, price, id) {
+  postAnnouncement(title, description, sportType, price, images, country, city, dateStart, dateEnd, weekdays, id) {
     console.log(price);
     if (id == undefined)
-      return authAxios.post('/owner/a/new', {
+      return authAxios.post("owner/a/new", {
         title,
         description,
         sportType,
+        price,
         images,
         country,
         city,
         dateStart,
         dateEnd,
-        weekdays,
-        price
+        weekdays
       });
-    return authAxios.put('/owner/a/' + id, {
+    return authAxios.put("owner/a/" + id, {
       title,
       description,
       sportType,
+      price,
       images,
       country,
-      city,
-      price
+      city
     });
   }
 
   // Dummy Get
   getDummy() {
-    return authAxios.get('/test/debug/get');
+    return authAxios.get("/test/debug/get");
   }
 
   // Dummy Post
   postDummy(json_text) {
-    return authAxios.post('/test/debug/post', json_text);
+    return authAxios.post("/test/debug/post", json_text);
   }
 }
 

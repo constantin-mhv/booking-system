@@ -60,7 +60,7 @@ label {
 }
 
 .form-checkbox {
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 #sameline_container
@@ -77,4 +77,9 @@ label {
 #sameline_block1
 {
     padding-right: 150px;
+}
+
+.centered
+{
+  text-align:center;
 }
