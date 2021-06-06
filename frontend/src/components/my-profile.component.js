@@ -4,6 +4,7 @@ import RequestService from "../services/request.service";
 import AuthService from "../services/auth.service";
 import { getRoleName, isRole } from "../functions/roles"
 import AnnPrev from "../components/ann-prev.component";
+import ResPrev from "../components/res-prev.component";
 
 export default class MyProfile extends Component {
   constructor(props) {
@@ -85,7 +86,7 @@ export default class MyProfile extends Component {
             {isRole(currentUser, "ROLE_CLIENT") ?
               <>
                 <strong>Reservations:</strong>
-                <h3>{profileList.map(a => AnnPrev(a, false))}</h3>
+                <h3>{profileList.map(a => ResPrev(a))}</h3>
               </> : null}
           </div> : null}
       </div>

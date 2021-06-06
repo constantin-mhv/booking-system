@@ -56,7 +56,7 @@ export default class Announcement extends Component {
         id = this.props.match.params.id;
       RequestService.postReservation(
         id,
-        this.state.selectedDate
+        this.state.selectedDate.getTime()
       ).then(
         response => {
           this.setState({

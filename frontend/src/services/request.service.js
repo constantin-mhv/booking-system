@@ -60,7 +60,7 @@ class RequestService {
   }
 
   getReservationListByUser() {
-    return authAxios.get("client/reservations");
+    return authAxios.get("client/a/reservations");
   }
   
   postReservation(id, date) {
