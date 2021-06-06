@@ -259,6 +259,18 @@ public class Announcement {
         );
     }
 
+    public Map<String, Object> getMapLessReservation(Long date) {
+        return Map.ofEntries(
+                Map.entry("id", getId().toString()),
+                Map.entry("title", getTitle()),
+                Map.entry("owner_id", getOwner().getId()),
+                Map.entry("publication_date_time", getPublicationDateTime().toString()),
+                Map.entry("sportType", getSportTypeString()),
+                Map.entry("price", getPrice()),
+                Map.entry("date", date)
+        );
+    }
+
     public void update(NewAnnouncement changedAnnouncement) {
         setTitle(changedAnnouncement.getTitle());
         setDescription(changedAnnouncement.getDescription());

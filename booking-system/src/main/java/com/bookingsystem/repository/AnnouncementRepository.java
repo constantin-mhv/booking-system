@@ -58,7 +58,9 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, UUID
             "where bin_to_uuid(a.id) = :id", nativeQuery = true)
     void updateAnnouncementStatus(@Param("id") String id, @Param("status") String status);
 
-    @Query(value = "select bin_to_uuid(id) id, bin_to_uuid(owner_id) owner_id, title, description, country, city, price, publication_date_time, date_start, date_end, weekdays, sport_type, status from announcements a where " +
+    @Query(value = "select bin_to_uuid(id) id, bin_to_uuid(owner_id) owner_id, title, description, " +
+            "country, city, price, publication_date_time, date_start, date_end, weekdays, sport_type, " +
+            "status from announcements a where " +
             ":country is null or a.country = :country and " +
             ":city is null or a.city = :city and " +
             ":sport_type is null or a.sport_type = :sport_type " +

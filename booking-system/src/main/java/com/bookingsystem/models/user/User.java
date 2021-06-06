@@ -1,6 +1,7 @@
 package com.bookingsystem.models.user;
 
 import com.bookingsystem.models.announcement.Announcement;
+import com.bookingsystem.models.announcement.Reservation;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -47,6 +48,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Reservation> reservations;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Announcement> announcements;
@@ -129,4 +133,10 @@ public class User {
     public ERole getRole() {
         return new ArrayList<>(roles).get(0).getName();
     }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+
 }
